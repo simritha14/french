@@ -3,118 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verb Conjugation Quiz</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        h1 {
-            text-align: center;
-        }
-        .quiz-container {
-            max-width: 600px;
-            margin: auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .question {
-            margin-bottom: 20px;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <title>Home Page</title>
 </head>
 <body>
-
-    <h1>Verb Conjugation Quiz</h1>
-    <div class="quiz-container">
-        <form id="quizForm">
-            <div class="question">
-                <label for="q1">1. Je (parler)</label>
-                <input type="text" id="q1" name="q1">
-            </div>
-            <div class="question">
-                <label for="q2">2. Nous (chanter)</label>
-                <input type="text" id="q2" name="q2">
-            </div>
-            <div class="question">
-                <label for="q3">3. Tu (aimer)</label>
-                <input type="text" id="q3" name="q3">
-            </div>
-            <div class="question">
-                <label for="q4">4. Vous (danser)</label>
-                <input type="text" id="q4" name="q4">
-            </div>
-            <div class="question">
-                <label for="q5">5. Ils (détester)</label>
-                <input type="text" id="q5" name="q5">
-            </div>
-            <div class="question">
-                <label for="q6">6. Elle (donner)</label>
-                <input type="text" id="q6" name="q6">
-            </div>
-            <div class="question">
-                <label for="q7">7. Nous (étudier)</label>
-                <input type="text" id="q7" name="q7">
-            </div>
-            <div class="question">
-                <label for="q8">8. Vous (demander)</label>
-                <input type="text" id="q8" name="q8">
-            </div>
-            <div class="question">
-                <label for="q9">9. Ils (habiter)</label>
-                <input type="text" id="q9" name="q9">
-            </div>
-            <div class="question">
-                <label for="q10">10. Je (jouer)</label>
-                <input type="text" id="q10" name="q10">
-            </div>
-
-            <button type="button" onclick="checkAnswers()">Submit</button>
-        </form>
-        <div id="result"></div>
-    </div>
-
-    <script>
-        function checkAnswers() {
-            const answers = [
-                "parle", "chantons", "aimes", "dansez", "détestent",
-                "donne", "étudions", "demandez", "habitent", "joue"
-            ];
-
-            let score = 0;
-            for (let i = 1; i <= 10; i++) {
-                const userAnswer = document.getElementById('q' + i).value.trim().toLowerCase();
-                if (userAnswer === answers[i - 1]) {
-                    score++;
-                }
-            }
-
-            document.getElementById("result").innerHTML = `<h2>You scored ${score}/10!</h2>`;
-        }
-    </script>
-
+    <h1>Welcome to SIM ACADEMY</h1>
+    <nav>
+        <a href="quiz.html">CONJUGATION TEST</a>
+        <a href="passe.html">PASSE COMPOSE TEST</a>
+    </nav>
 </body>
 </html>
