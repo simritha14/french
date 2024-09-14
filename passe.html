@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Verb Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #score {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>French Verb Conjugation Quiz</h1>
+    <div class="quiz-container">
+        <form id="quizForm" onsubmit="return checkAnswers();">
+            <!-- Reflexive Verbs and Regular Verbs -->
+            <div class="question">
+                <label for="q1">1. Je (se lever)</label>
+                <input type="text" id="q1">
+            </div>
+            <div class="question">
+                <label for="q2">2. Nous (manger)</label>
+                <input type="text" id="q2">
+            </div>
+            <div class="question">
+                <label for="q3">3. Tu (parler)</label>
+                <input type="text" id="q3">
+            </div>
+            <div class="question">
+                <label for="q4">4. Elle (se laver)</label>
+                <input type="text" id="q4">
+            </div>
+            <div class="question">
+                <label for="q5">5. Ils (finir)</label>
+                <input type="text" id="q5">
+            </div>
+
+            <!-- Irregular Verbs -->
+            <div class="question">
+                <label for="q6">6. Nous (avoir)</label>
+                <input type="text" id="q6">
+            </div>
+            <div class="question">
+                <label for="q7">7. Tu (être)</label>
+                <input type="text" id="q7">
+            </div>
+            <div class="question">
+                <label for="q8">8. Vous (faire)</label>
+                <input type="text" id="q8">
+            </div>
+            <div class="question">
+                <label for="q9">9. Ils (prendre)</label>
+                <input type="text" id="q9">
+            </div>
+            <div class="question">
+                <label for="q10">10. Elle (venir)</label>
+                <input type="text" id="q10">
+            </div>
+            <div class="question">
+                <label for="q11">11. Nous (voir)</label>
+                <input type="text" id="q11">
+            </div>
+            <div class="question">
+                <label for="q12">12. Vous (mettre)</label>
+                <input type="text" id="q12">
+            </div>
+            <div class="question">
+                <label for="q13">13. Ils (dire)</label>
+                <input type="text" id="q13">
+            </div>
+            <div class="question">
+                <label for="q14">14. Je (écrire)</label>
+                <input type="text" id="q14">
+            </div>
+            <div class="question">
+                <label for="q15">15. Nous (lire)</label>
+                <input type="text" id="q15">
+            </div>
+            <div class="question">
+                <label for="q16">16. Tu (pouvoir)</label>
+                <input type="text" id="q16">
+            </div>
+            <div class="question">
+                <label for="q17">17. Vous (vouloir)</label>
+                <input type="text" id="q17">
+            </div>
+            <div class="question">
+                <label for="q18">18. Ils (devoir)</label>
+                <input type="text" id="q18">
+            </div>
+            <div class="question">
+                <label for="q19">19. Je (boire)</label>
+                <input type="text" id="q19">
+            </div>
+            <div class="question">
+                <label for="q20">20. Nous (connaître)</label>
+                <input type="text" id="q20">
+            </div>
+
+            <button type="submit">Submit Quiz</button>
+        </form>
+
+        <div id="score"></div>
+    </div>
+
+    <script>
+        function checkAnswers() {
+            // Array of correct answers
+            const answers = [
+                "me suis levé", "avons mangé", "as parlé", "s'est lavée", "ont fini", // Reflexive and Regular verbs
+                "avons eu", "as été", "avez fait", "ont pris", "est venue", // Irregular verbs
+                "avons vu", "avez mis", "ont dit", "ai écrit", "avons lu",
+                "as pu", "avez voulu", "ont dû", "ai bu", "avons connu"
+            ];
+
+            let score = 0;
+            for (let i = 1; i <= 20; i++) {
+                const userAnswer = document.getElementById("q" + i).value.trim().toLowerCase();
+                const correctAnswer = answers[i - 1].toLowerCase();
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                }
+            }
+
+            // Display the score
+            document.getElementById("score").innerText = "You got " + score + " out of 20 correct!";
+            return false; // Prevent form submission
+        }
+    </script>
+
+</body>
+</html>
