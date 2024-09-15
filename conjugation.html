@@ -126,7 +126,7 @@
     };
 
     function generateTable(verb, data) {
-        let tableHtml = `
+        let tableHtml = `<center>
             <div id="${verb.charAt(0).toUpperCase()}" class="table">
                 <div class="caption">${verb} <span class="meaning">(${data.meaning})</span></div>
                 <div class="row">
@@ -138,7 +138,7 @@
                 tableHtml += `
                     <div class="row">
                         <div>${pronoun}</div><div>${conjugation}</div>
-                    </div>`;
+                    </div></center>`;
             }
         }
         tableHtml += `</div>`;
