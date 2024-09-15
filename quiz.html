@@ -53,6 +53,12 @@
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            font-size: 16px;
+        }
+        .correct-answer {
+            font-size: 14px;
+            color: #d32f2f;
+            display: none; /* Initially hidden */
         }
         button {
             display: block;
@@ -74,6 +80,14 @@
             text-align: center;
             color: #333;
         }
+        .correct {
+            background-color: #c8e6c9; /* Light green background */
+            border-color: #2e7d32;    /* Dark green border */
+        }
+        .incorrect {
+            background-color: #ffccbc; /* Light red background */
+            border-color: #d32f2f;    /* Dark red border */
+        }
     </style>
 </head>
 <body>
@@ -88,69 +102,137 @@
 
     <div class="quiz-container">
         <form id="quizForm">
-            <div class="question">
-                <label for="q1">1. Je (parler)</label>
-                <input type="text" id="q1" name="q1">
-            </div>
-            <div class="question">
-                <label for="q2">2. Nous (chanter)</label>
-                <input type="text" id="q2" name="q2">
-            </div>
-            <div class="question">
-                <label for="q3">3. Tu (aimer)</label>
-                <input type="text" id="q3" name="q3">
-            </div>
-            <div class="question">
-                <label for="q4">4. Vous (danser)</label>
-                <input type="text" id="q4" name="q4">
-            </div>
-            <div class="question">
-                <label for="q5">5. Ils (détester)</label>
-                <input type="text" id="q5" name="q5">
-            </div>
-            <div class="question">
-                <label for="q6">6. Elle (donner)</label>
-                <input type="text" id="q6" name="q6">
-            </div>
-            <div class="question">
-                <label for="q7">7. Nous (étudier)</label>
-                <input type="text" id="q7" name="q7">
-            </div>
-            <div class="question">
-                <label for="q8">8. Vous (demander)</label>
-                <input type="text" id="q8" name="q8">
-            </div>
-            <div class="question">
-                <label for="q9">9. Ils (habiter)</label>
-                <input type="text" id="q9" name="q9">
-            </div>
-            <div class="question">
-                <label for="q10">10. Je (jouer)</label>
-                <input type="text" id="q10" name="q10">
-            </div>
-
-            <button type="button" onclick="checkAnswers()">Submit</button>
+            <!-- Questions will be injected here by JavaScript -->
         </form>
         <div id="result"></div>
     </div>
 
     <script>
-        function checkAnswers() {
-            const answers = [
-                "parle", "chantons", "aimes", "dansez", "détestent",
-                "donne", "étudions", "demandez", "habitent", "joue"
-            ];
+        const verbs = [
+            // ER verbs
+            { infinitive: 'parler', pronoun: 'Je', correct: 'parle' },
+            { infinitive: 'chanter', pronoun: 'Nous', correct: 'chantons' },
+            { infinitive: 'aimer', pronoun: 'Tu', correct: 'aimes' },
+            { infinitive: 'danser', pronoun: 'Vous', correct: 'dansez' },
+            { infinitive: 'détester', pronoun: 'Ils', correct: 'détestent' },
+            { infinitive: 'donner', pronoun: 'Elle', correct: 'donne' },
+            { infinitive: 'étudier', pronoun: 'Nous', correct: 'étudions' },
+            { infinitive: 'demander', pronoun: 'Vous', correct: 'demandez' },
+            { infinitive: 'habiter', pronoun: 'Ils', correct: 'habitent' },
+            { infinitive: 'jouer', pronoun: 'Je', correct: 'joue' },
+            // IR verbs
+            { infinitive: 'finir', pronoun: 'Nous', correct: 'finissons' },
+            { infinitive: 'choisir', pronoun: 'Vous', correct: 'choisissez' },
+            { infinitive: 'grossir', pronoun: 'Ils', correct: 'grossissent' },
+            { infinitive: 'remplir', pronoun: 'Je', correct: 'remplis' },
+            { infinitive: 'agir', pronoun: 'Tu', correct: 'agis' },
+            
+            { infinitive: 'abolir', pronoun: 'Elle', correct: 'abolit' },
+            { infinitive: 'accomplir', pronoun: 'Nous', correct: 'accomplissons' },
+            { infinitive: 'punir', pronoun: 'Vous', correct: 'punissez' },
+            { infinitive: 'saisir', pronoun: 'Ils', correct: 'saisissent' },
+            { infinitive: 'vieillir', pronoun: 'Je', correct: 'vieillis' },
+            // RE verbs
+            { infinitive: 'perdre', pronoun: 'Nous', correct: 'perdons' },
+            { infinitive: 'attendre', pronoun: 'Vous', correct: 'attendez' },
+            { infinitive: 'répondre', pronoun: 'Ils', correct: 'répondent' },
+            { infinitive: 'suspendre', pronoun: 'Je', correct: 'suspends' },
+            { infinitive: 'rendre', pronoun: 'Tu', correct: 'rends' },
+            { infinitive: 'vendre', pronoun: 'Elle', correct: 'vend' },
+            { infinitive: 'fondre', pronoun: 'Nous', correct: 'fondons' },
+            { infinitive: 'descendre', pronoun: 'Vous', correct: 'descendez' },
+            { infinitive: 'pendre', pronoun: 'Ils', correct: 'pendent' },
+            //irregular
+            { infinitive: 'acheter', pronoun: 'Je', correct: 'achète' },
+            { infinitive: 'être', pronoun: 'Tu', correct: 'es' },
+            { infinitive: 'aller', pronoun: 'Il', correct: 'va' },
+            { infinitive: 'avoir', pronoun: 'Nous', correct: 'avons' },
+            { infinitive: 'venir', pronoun: 'Elle', correct: 'vient' },
+            { infinitive: 'savoir', pronoun: 'Vous', correct: 'savez' },
+            { infinitive: 'voir', pronoun: 'Ils', correct: 'voient' },
+            { infinitive: 'prendre', pronoun: 'Je', correct: 'prends' },
+            { infinitive: 'pouvoir', pronoun: 'Nous', correct: 'pouvons' },
+            { infinitive: 'vouloir', pronoun: 'Tu', correct: 'veux' },
+            { infinitive: 'appeler', pronoun: 'Elle', correct: 'appelle' },
+            { infinitive: 'assaillir', pronoun: 'Il', correct: 'assaille' },
+            { infinitive: 'battre', pronoun: 'Nous', correct: 'battons' },
+            { infinitive: 'boire', pronoun: 'Ils', correct: 'boivent' },
+            { infinitive: 'clore', pronoun: 'Vous', correct: 'clorez' },
+            { infinitive: 'commencer', pronoun: 'Je', correct: 'commence' },
+            { infinitive: 'conclure', pronoun: 'Nous', correct: 'concluons' },
+            { infinitive: 'conduire', pronoun: 'Elle', correct: 'conduit' },
+            { infinitive: 'confire', pronoun: 'Vous', correct: 'confisez' },
+            { infinitive: 'dire', pronoun: 'Je', correct: 'dis' },    
+            { infinitive: 'mordre', pronoun: 'Je', correct: 'mords' }
+        ];
 
+        // Function to shuffle the verbs array
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Function to generate quiz questions
+        function generateQuiz() {
+            const shuffledVerbs = shuffle(verbs).slice(0, 10); // Select 10 random verbs
+            const form = document.getElementById('quizForm');
+            shuffledVerbs.forEach((verb, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+                questionDiv.innerHTML = `
+                    <label for="q${index + 1}">${index + 1}. ${verb.pronoun} (${verb.infinitive})</label>
+                    <input type="text" id="q${index + 1}" name="q${index + 1}" onblur="validateAnswer(${index + 1}, '${verb.correct.toLowerCase()}')">
+                    <p id="correct-answer-${index + 1}" class="correct-answer">Correct answer: ${verb.correct}</p>
+                `;
+                form.appendChild(questionDiv);
+            });
+
+            const submitButton = document.createElement('button');
+            submitButton.type = 'button';
+            submitButton.textContent = 'Submit';
+            submitButton.onclick = () => checkAnswers(shuffledVerbs);
+            form.appendChild(submitButton);
+        }
+
+        // Function to check answers as the user moves to the next field (on blur)
+        function validateAnswer(questionIndex, correctAnswer) {
+            const userAnswer = document.getElementById('q' + questionIndex).value.trim().toLowerCase();
+            const inputField = document.getElementById('q' + questionIndex);
+
+            if (userAnswer === correctAnswer) {
+                inputField.classList.remove('incorrect');
+                inputField.classList.add('correct');
+                document.getElementById(`correct-answer-${questionIndex}`).style.display = 'none'; // Hide the correct answer if right
+            } else {
+                inputField.classList.remove('correct');
+                inputField.classList.add('incorrect');
+            }
+        }
+
+        // Function to check all answers and display the final score
+        function checkAnswers(shuffledVerbs) {
             let score = 0;
+
             for (let i = 1; i <= 10; i++) {
                 const userAnswer = document.getElementById('q' + i).value.trim().toLowerCase();
-                if (userAnswer === answers[i - 1]) {
+                const correctAnswer = shuffledVerbs[i - 1].correct.toLowerCase();
+
+                if (userAnswer === correctAnswer) {
                     score++;
+                } else {
+                    // Display correct answer for incorrect ones
+                    document.getElementById(`correct-answer-${i}`).style.display = 'block';
                 }
             }
 
-            document.getElementById("result").innerHTML = `<h2>You scored ${score}/10!</h2>`;
+            document.getElementById('result').innerHTML = `<h2>You scored ${score}/10!</h2>`;
         }
+
+        // Initialize quiz on page load
+        window.onload = generateQuiz;
     </script>
 
 </body>
