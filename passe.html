@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>French Verb Quiz</title>
+    <title>French Passé Composé Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,8 +19,8 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         nav {
-            margin: 20px 0;
             text-align: center;
+            margin: 20px 0;
         }
         nav a {
             margin: 0 15px;
@@ -53,6 +53,12 @@
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            font-size: 16px;
+        }
+        .correct-answer {
+            font-size: 14px;
+            color: #d32f2f;
+            display: none; /* Initially hidden */
         }
         button {
             display: block;
@@ -68,11 +74,19 @@
         button:hover {
             background-color: #45a049;
         }
-        #score {
+        #result {
             margin-top: 20px;
             font-size: 20px;
             text-align: center;
             color: #333;
+        }
+        .correct {
+            background-color: #c8e6c9; /* Light green background */
+            border-color: #2e7d32;    /* Dark green border */
+        }
+        .incorrect {
+            background-color: #ffccbc; /* Light red background */
+            border-color: #d32f2f;    /* Dark red border */
         }
     </style>
 </head>
@@ -87,121 +101,111 @@
     </nav>
 
     <div class="quiz-container">
-        <form id="quizForm" onsubmit="return checkAnswers();">
-            <!-- Reflexive Verbs and Regular Verbs -->
-            <div class="question">
-                <label for="q1">1. Je (se lever)</label>
-                <input type="text" id="q1">
-            </div>
-            <div class="question">
-                <label for="q2">2. Nous (manger)</label>
-                <input type="text" id="q2">
-            </div>
-            <div class="question">
-                <label for="q3">3. Tu (parler)</label>
-                <input type="text" id="q3">
-            </div>
-            <div class="question">
-                <label for="q4">4. Elle (se laver)</label>
-                <input type="text" id="q4">
-            </div>
-            <div class="question">
-                <label for="q5">5. Ils (finir)</label>
-                <input type="text" id="q5">
-            </div>
-
-            <!-- Irregular Verbs -->
-            <div class="question">
-                <label for="q6">6. Nous (avoir)</label>
-                <input type="text" id="q6">
-            </div>
-            <div class="question">
-                <label for="q7">7. Tu (être)</label>
-                <input type="text" id="q7">
-            </div>
-            <div class="question">
-                <label for="q8">8. Vous (faire)</label>
-                <input type="text" id="q8">
-            </div>
-            <div class="question">
-                <label for="q9">9. Ils (prendre)</label>
-                <input type="text" id="q9">
-            </div>
-            <div class="question">
-                <label for="q10">10. Elle (venir)</label>
-                <input type="text" id="q10">
-            </div>
-            <div class="question">
-                <label for="q11">11. Nous (voir)</label>
-                <input type="text" id="q11">
-            </div>
-            <div class="question">
-                <label for="q12">12. Vous (mettre)</label>
-                <input type="text" id="q12">
-            </div>
-            <div class="question">
-                <label for="q13">13. Ils (dire)</label>
-                <input type="text" id="q13">
-            </div>
-            <div class="question">
-                <label for="q14">14. Je (écrire)</label>
-                <input type="text" id="q14">
-            </div>
-            <div class="question">
-                <label for="q15">15. Nous (lire)</label>
-                <input type="text" id="q15">
-            </div>
-            <div class="question">
-                <label for="q16">16. Tu (pouvoir)</label>
-                <input type="text" id="q16">
-            </div>
-            <div class="question">
-                <label for="q17">17. Vous (vouloir)</label>
-                <input type="text" id="q17">
-            </div>
-            <div class="question">
-                <label for="q18">18. Ils (devoir)</label>
-                <input type="text" id="q18">
-            </div>
-            <div class="question">
-                <label for="q19">19. Je (boire)</label>
-                <input type="text" id="q19">
-            </div>
-            <div class="question">
-                <label for="q20">20. Nous (connaître)</label>
-                <input type="text" id="q20">
-            </div>
-
-            <button type="submit">Submit Quiz</button>
+        <form id="quizForm">
+            <!-- Questions will be injected here by JavaScript -->
         </form>
-
-        <div id="score"></div>
+        <div id="result"></div>
     </div>
 
     <script>
-        function checkAnswers() {
-            // Array of correct answers
-            const answers = [
-                "me suis levé", "avons mangé", "as parlé", "s'est lavée", "ont fini", // Reflexive and Regular verbs
-                "avons eu", "as été", "avez fait", "ont pris", "est venue", // Irregular verbs
-                "avons vu", "avez mis", "ont dit", "ai écrit", "avons lu",
-                "as pu", "avez voulu", "ont dû", "ai bu", "avons connu"
-            ];
+        const questions = [
+// Reflexive verbs
+    { pronoun: 'Je', verb: 'se lever', correct: 'me suis levé(e)' },
+    { pronoun: 'Nous', verb: 'se promener', correct: 'nous sommes promené(e)s' },
+    { pronoun: 'Elle', verb: 'se réveiller', correct: 's\'est réveillée' },
+    { pronoun: 'Ils', verb: 'se reposer', correct: 'se sont reposés' },
+    { pronoun: 'Tu', verb: 'se coucher', correct: 't\'es couché(e)' },
 
+    // Regular -ER verbs
+    { pronoun: 'Je', verb: 'manger', correct: 'ai mangé' },
+    { pronoun: 'Nous', verb: 'parler', correct: 'avons parlé' },
+    { pronoun: 'Tu', verb: 'aimer', correct: 'as aimé' },
+    { pronoun: 'Elle', verb: 'danser', correct: 'a dansé' },
+    { pronoun: 'Ils', verb: 'regarder', correct: 'ont regardé' },
+
+    // Regular -IR verbs
+    { pronoun: 'Je', verb: 'finir', correct: 'ai fini' },
+    { pronoun: 'Nous', verb: 'choisir', correct: 'avons choisi' },
+    { pronoun: 'Tu', verb: 'remplir', correct: 'as rempli' },
+    { pronoun: 'Elle', verb: 'grandir', correct: 'a grandi' },
+    { pronoun: 'Ils', verb: 'réfléchir', correct: 'ont réfléchi' },
+
+    // Regular -RE verbs
+    { pronoun: 'Je', verb: 'vendre', correct: 'ai vendu' },
+    { pronoun: 'Nous', verb: 'attendre', correct: 'avons attendu' },
+    { pronoun: 'Tu', verb: 'perdre', correct: 'as perdu' },
+    { pronoun: 'Elle', verb: 'répondre', correct: 'a répondu' },
+    { pronoun: 'Ils', verb: 'descendre', correct: 'ont descendu' },
+
+    // Irregular verbs
+    { pronoun: 'Il', verb: 'aller', correct: 'est allé' },
+    { pronoun: 'Nous', verb: 'partir', correct: 'sommes partis' },
+    { pronoun: 'Vous', verb: 'arriver', correct: 'êtes arrivé(e)(s)' },
+    { pronoun: 'Ils', verb: 'revenir', correct: 'sont revenus' },
+    { pronoun: 'Elle', verb: 'venir', correct: 'est venue' },
+    { pronoun: 'Je', verb: 'prendre', correct: 'ai pris' },
+    { pronoun: 'Tu', verb: 'voir', correct: 'as vu' },
+    { pronoun: 'Elle', verb: 'boire', correct: 'a bu' },
+    { pronoun: 'Ils', verb: 'dire', correct: 'ont dit' },
+    { pronoun: 'Nous', verb: 'écrire', correct: 'avons écrit' }
+        ];
+
+        // Function to generate quiz questions
+        function generateQuiz() {
+            const form = document.getElementById('quizForm');
+            questions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+                questionDiv.innerHTML = `
+                    <label for="q${index + 1}">${index + 1}. ${question.pronoun} (${question.verb})</label>
+                    <input type="text" id="q${index + 1}" name="q${index + 1}" onblur="validateAnswer(${index + 1}, '${question.correct.toLowerCase()}')">
+                    <p id="correct-answer-${index + 1}" class="correct-answer">Correct answer: ${question.correct}</p>
+                `;
+                form.appendChild(questionDiv);
+            });
+
+            const submitButton = document.createElement('button');
+            submitButton.type = 'button';
+            submitButton.textContent = 'Submit';
+            submitButton.onclick = checkAnswers;
+            form.appendChild(submitButton);
+        }
+
+        // Function to validate individual answers
+        function validateAnswer(questionIndex, correctAnswer) {
+            const userAnswer = document.getElementById('q' + questionIndex).value.trim().toLowerCase();
+            const inputField = document.getElementById('q' + questionIndex);
+
+            if (userAnswer === correctAnswer) {
+                inputField.classList.remove('incorrect');
+                inputField.classList.add('correct');
+                document.getElementById(`correct-answer-${questionIndex}`).style.display = 'none'; // Hide correct answer if right
+            } else {
+                inputField.classList.remove('correct');
+                inputField.classList.add('incorrect');
+            }
+        }
+
+        // Function to check all answers and display the final score
+        function checkAnswers() {
             let score = 0;
-            for (let i = 1; i <= 20; i++) {
-                const userAnswer = document.getElementById("q" + i).value.trim().toLowerCase();
-                const correctAnswer = answers[i - 1].toLowerCase();
+
+            questions.forEach((question, index) => {
+                const userAnswer = document.getElementById('q' + (index + 1)).value.trim().toLowerCase();
+                const correctAnswer = question.correct.toLowerCase();
 
                 if (userAnswer === correctAnswer) {
                     score++;
+                } else {
+                    document.getElementById(`correct-answer-${index + 1}`).style.display = 'block'; // Show correct answer if wrong
                 }
-            }
+            });
 
-            // Display the score
-            document.getElementById("score").innerText = "You got " + score + " out of 20 correct!";
-            return false; // Prevent form submission
+            document.getElementById('result').innerHTML = `<h2>You scored ${score}/20!</h2>`;
         }
+
+        // Initialize quiz on page load
+        window.onload = generateQuiz;
     </script>
 
 </body>
