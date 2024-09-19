@@ -32,22 +32,32 @@
             text-decoration: underline;
         }
         .quiz-container {
-            max-width: 600px;
+            max-width: 800px;
             margin: auto;
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h1 {
+        h1, h2 {
             text-align: center;
             color: #333;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
         }
         .question {
             margin-bottom: 20px;
         }
+        .section-instruction {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
         input[type="text"] {
-            width: 100%;
+            width: 50%;
             padding: 8px;
             margin-top: 5px;
             margin-bottom: 10px;
@@ -55,15 +65,10 @@
             border-radius: 4px;
             font-size: 16px;
         }
-        .correct-answer {
-            font-size: 14px;
-            color: #d32f2f;
-            display: none; /* Initially hidden */
-        }
         button {
             display: block;
-            width: 100%;
-            padding: 10px;
+            margin: 20px auto;
+            padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -88,6 +93,11 @@
             background-color: #ffccbc; /* Light red background */
             border-color: #d32f2f;    /* Dark red border */
         }
+        .correct-answer {
+            display: none;
+            color: #2e7d32;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -101,114 +111,138 @@
     </nav>
 
     <div class="quiz-container">
+        <p class="section-instruction">Complete the sentences with the correct form of the passé composé:</p>
+
         <form id="quizForm">
-            <!-- Questions will be injected here by JavaScript -->
+            <!-- Questions will be dynamically injected here -->
         </form>
+                <p class="section-instruction">Complete the sentences with the correct form of the passé composé. Don’t forget about exceptions such as irregular verbs and participle agreements:</p>
+
+        <form id="quizForm1">
+            <!-- Questions will be dynamically injected here -->
+        </form>
+
         <div id="result"></div>
     </div>
-    
 
     <script>
-        const questions = [
-            { pronoun: 'Je', verb: 'se lever', correct: 'me suis levé(e)' },
-            { pronoun: 'Nous', verb: 'se promener', correct: 'nous sommes promené(e)s' },
+        // Question pools
+        const section1Questions = [
+            { pronoun: 'Je', verb: 'se lever', correct: 'me suis levé' },
+            { pronoun: 'Nous', verb: 'se promener', correct: 'nous sommes promenés' },
             { pronoun: 'Elle', verb: 'se réveiller', correct: 's\'est réveillée' },
             { pronoun: 'Ils', verb: 'se reposer', correct: 'se sont reposés' },
-            { pronoun: 'Tu', verb: 'se coucher', correct: 't\'es couché(e)' },
+            { pronoun: 'Tu', verb: 'se coucher', correct: 't\'es couché' },
             { pronoun: 'Je', verb: 'manger', correct: 'ai mangé' },
             { pronoun: 'Nous', verb: 'parler', correct: 'avons parlé' },
             { pronoun: 'Tu', verb: 'aimer', correct: 'as aimé' },
             { pronoun: 'Elle', verb: 'danser', correct: 'a dansé' },
-            { pronoun: 'Ils', verb: 'regarder', correct: 'ont regardé' },
-            { pronoun: 'Je', verb: 'finir', correct: 'ai fini' },
-            { pronoun: 'Nous', verb: 'choisir', correct: 'avons choisi' },
-            { pronoun: 'Tu', verb: 'remplir', correct: 'as rempli' },
-            { pronoun: 'Elle', verb: 'grandir', correct: 'a grandi' },
-            { pronoun: 'Ils', verb: 'réfléchir', correct: 'ont réfléchi' },
-            { pronoun: 'Je', verb: 'vendre', correct: 'ai vendu' },
-            { pronoun: 'Nous', verb: 'attendre', correct: 'avons attendu' },
-            { pronoun: 'Tu', verb: 'perdre', correct: 'as perdu' },
-            { pronoun: 'Elle', verb: 'répondre', correct: 'a répondu' },
-            { pronoun: 'Ils', verb: 'descendre', correct: 'sont descendu' },
-            { pronoun: 'Il', verb: 'aller', correct: 'est allé' },
-            { pronoun: 'Nous', verb: 'partir', correct: 'sommes partis' },
-            { pronoun: 'Vous', verb: 'arriver', correct: 'êtes arrivé(e)(s)' },
-            { pronoun: 'Ils', verb: 'revenir', correct: 'sont revenus' },
-            { pronoun: 'Elle', verb: 'venir', correct: 'est venue' },
-            { pronoun: 'Je', verb: 'prendre', correct: 'ai pris' },
-            { pronoun: 'Tu', verb: 'voir', correct: 'as vu' },
-            { pronoun: 'Elle', verb: 'boire', correct: 'a bu' },
-            { pronoun: 'Ils', verb: 'dire', correct: 'ont dit' },
-            { pronoun: 'Nous', verb: 'écrire', correct: 'avons écrit' }
+            { pronoun: 'Ils', verb: 'regarder', correct: 'ont regardé' }
         ];
 
-        // Function to shuffle array
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
+        const section2Questions = [
+            { question: 'Ils (écrire) _____ un livre.', correct: 'ont écrit' },
+            { question: 'Juliette (regarder) _____ un film.', correct: 'a regardé' },
+            { question: 'Est-ce que Pierre (finir) _____ à 16 heures?', correct: 'a fini' },
+            { question: 'J’(fermer) _____ la fenêtre.', correct: 'ai fermé' },
+            { question: 'François (se lever) _____ à 8 heures.', correct: 's\'est levé' },
+            { question: 'Est-ce que tu (lire) _____ ce livre?', correct: 'as lu' },
+            { question: 'Est-ce que vous (recevoir) _____ un paquet?', correct: 'avez reçu' },
+            { question: 'Ils (se perdre) _____ dans la forêt.', correct: 'se sont perdus' },
+            { question: 'Est-ce qu\'elle (prendre) _____ le téléphone?', correct: 'a pris' },
+            { question: 'Léa et Sarah (partir) _____ hier.', correct: 'sont parties' }
+        ];
+
+        // Function to shuffle and select 5 random questions
+        function getRandomQuestions(arr) {
+            return arr.sort(() => 0.5 - Math.random()).slice(0, 5);
         }
 
-        // Function to generate quiz questions
-        function generateQuiz() {
-            const form = document.getElementById('quizForm');
-            const shuffledQuestions = shuffle([...questions]).slice(0, 10); // Shuffle and take 10 questions
-            
-            shuffledQuestions.forEach((question, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.classList.add('question');
-                questionDiv.innerHTML = `
-                    <label for="q${index + 1}">${index + 1}. ${question.pronoun} (${question.verb})</label>
-                    <input type="text" id="q${index + 1}" name="q${index + 1}" onblur="validateAnswer(${index + 1}, '${question.correct.toLowerCase()}')">
-                    <p id="correct-answer-${index + 1}" class="correct-answer">Correct answer: ${question.correct}</p>
+        // Function to display the questions
+        function displayQuestions() {
+            const quizForm = document.getElementById('quizForm');
+            const quizForm1 = document.getElementById('quizForm1');
+
+            quizForm.innerHTML = ''; // Clear the form
+
+            // Get 5 random questions from each section
+            const section1Selected = getRandomQuestions(section1Questions);
+            const section2Selected = getRandomQuestions(section2Questions);
+
+            // Display Section 1 questions
+            section1Selected.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question">
+                        <p>${index + 1}. ${q.pronoun} (${q.verb}) _____</p>
+                        <input type="text" id="q${index + 1}" onblur="validateAnswer(${index + 1}, '${q.correct}')">
+                        <span id="correct-answer-${index + 1}" class="correct-answer">Correct answer: ${q.correct}</span>
+                    </div>
                 `;
-                form.appendChild(questionDiv);
+                quizForm.innerHTML += questionHTML;
             });
 
-            const submitButton = document.createElement('button');
-            submitButton.type = 'button';
-            submitButton.textContent = 'Submit';
-            submitButton.onclick = checkAnswers;
-            form.appendChild(submitButton);
+            // Display Section 2 questions
+            section2Selected.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question">
+                        <p>${index + 6}. ${q.question}</p>
+                        <input type="text" id="q${index + 6}" onblur="validateAnswer(${index + 6}, '${q.correct}')">
+                        <span id="correct-answer-${index + 6}" class="correct-answer">Correct answer: ${q.correct}</span>
+                    </div>
+                `;
+                quizForm1.innerHTML += questionHTML;
+            });
+
+            // Add the "Check Answers" button
+            quizForm1.innerHTML += `
+                <button type="button" onclick="checkAnswers()">Check exercise</button>
+            `;
         }
 
-        // Function to validate individual answers
+
         function validateAnswer(questionIndex, correctAnswer) {
-            const userAnswer = document.getElementById('q' + questionIndex).value.trim().toLowerCase();
-            const inputField = document.getElementById('q' + questionIndex);
+    const userAnswer = document.getElementById('q' + questionIndex).value.trim().toLowerCase();
+    const inputField = document.getElementById('q' + questionIndex);
 
-            if (userAnswer === correctAnswer) {
-                inputField.classList.remove('incorrect');
-                inputField.classList.add('correct');
-                document.getElementById(`correct-answer-${questionIndex}`).style.display = 'none'; // Hide correct answer if right
-            } else {
-                inputField.classList.remove('correct');
-                inputField.classList.add('incorrect');
-            }
-        }
+    // Handle apostrophes and trim spaces from the correct answer
+    const formattedCorrectAnswer = correctAnswer.toLowerCase().replace(/\s+/g, '').replace(/'/g, '');
 
-        // Function to check all answers and display the final score
+    // Also remove spaces and apostrophes from the user answer
+    const formattedUserAnswer = userAnswer.replace(/\s+/g, '').replace(/'/g, '');
+
+    if (formattedUserAnswer === formattedCorrectAnswer) {
+        inputField.classList.remove('incorrect');
+        inputField.classList.add('correct');
+        document.getElementById(`correct-answer-${questionIndex}`).style.display = 'none'; // Hide correct answer if right
+    } else {
+        inputField.classList.remove('correct');
+        inputField.classList.add('incorrect');
+    }
+}
+
+
+        // Function to check all answers (on button click)
         function checkAnswers() {
-            let score = 0;
+            const resultDiv = document.getElementById('result');
+            const inputs = document.querySelectorAll('input[type="text"]');
+            let correctCount = 0;
 
-            questions.forEach((question, index) => {
-                const userAnswer = document.getElementById('q' + (index + 1)).value.trim().toLowerCase();
-                const correctAnswer = question.correct.toLowerCase();
+            inputs.forEach(input => {
+                const questionIndex = input.id.replace('q', '');
+                const correctAnswer = document.getElementById(`correct-answer-${questionIndex}`).innerText.replace('Correct answer: ', '');
 
-                if (userAnswer === correctAnswer) {
-                    score++;
+                if (input.value.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+                    correctCount++;
                 } else {
-                    document.getElementById(`correct-answer-${index + 1}`).style.display = 'block'; // Show correct answer if wrong
+                    document.getElementById(`correct-answer-${questionIndex}`).style.display = 'block'; // Show correct answer if wrong
                 }
             });
 
-            document.getElementById('result').innerHTML = `<h2>You scored ${score}/10!</h2>`;
+            resultDiv.innerHTML = `You got ${correctCount} out of ${inputs.length} correct!`;
         }
 
-        // Initialize quiz on page load
-        window.onload = generateQuiz;
+        // Load questions when the page loads
+        window.onload = displayQuestions;
     </script>
 
 </body>
