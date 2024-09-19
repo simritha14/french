@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Futur Proche Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            text-align: center;
+            margin: 20px 0;
+        }
+        nav a {
+            margin: 0 15px;
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .section-instruction {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 50%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .correct {
+            background-color: #c8e6c9; /* Light green background */
+            border-color: #2e7d32;    /* Dark green border */
+        }
+        .incorrect {
+            background-color: #ffccbc; /* Light red background */
+            border-color: #d32f2f;    /* Dark red border */
+        }
+        .correct-answer {
+            display: none;
+            color: #2e7d32;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>French Futur Proche Quiz</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+    </nav>
+
+    <div class="quiz-container">
+        <p class="section-instruction">Complete the sentences with the correct form of aller.</p>
+
+        <form id="quizForm">
+            <!-- Questions will be dynamically injected here -->
+        </form>
+                <p class="section-instruction">Complete the sentences with the futur proche form of the verbs in brackets:</p>
+
+        <form id="quizForm1">
+            <!-- Questions will be dynamically injected here -->
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Question pools
+        const section1Questions = [
+    { pronoun: 'Nous', verb: 'marcher', correct: 'allons' },
+    { pronoun: 'Je', verb: 'manger', correct: 'vais' },
+    { pronoun: 'Ils', verb: 'parler', correct: 'vont' },
+    { pronoun: 'Tu', verb: 'lire', correct: 'vas' },
+    { pronoun: 'Elle', verb: 'faire', correct: 'va' },
+    { pronoun: 'Nous', verb: 'voyager', correct: 'allons' },
+    { pronoun: 'Vous', verb: 'chanter', correct: 'allez' },
+    { pronoun: 'Ils', verb: 'venir', correct: 'vont' },
+    { pronoun: 'Elle', verb: 'travailler', correct: 'va' },
+    { pronoun: 'Je', verb: 'dormir', correct: 'vais' },
+    { pronoun: 'Nous', verb: 'boire', correct: 'allons' },
+    { pronoun: 'Il', verb: 'nager', correct: 'va' },
+    { pronoun: 'Tu', verb: 'étudier', correct: 'vas' },
+    { pronoun: 'Vous', verb: 'partir', correct: 'allez' },
+    { pronoun: 'Ils', verb: 's\'amuser', correct: 'vont' },
+    { pronoun: 'Nous', verb: 'jouer', correct: 'allons' },
+    { pronoun: 'Elle', verb: 'cuisiner', correct: 'va' },
+    { pronoun: 'Je', verb: 'écouter', correct: 'vais' },
+    { pronoun: 'Vous', verb: 'regarder', correct: 'allez' },
+    { pronoun: 'Ils', verb: 'danser', correct: 'vont' }
+        ];
+
+        const section2Questions = [
+  { question: 'Nous (partir) _____ en vacances demain.', correct: 'allons partir' },
+    { question: 'Je (manger) _____ au restaurant ce soir.', correct: 'vais manger' },
+    { question: 'Ils (parler) _____ avec le directeur bientôt.', correct: 'vont parler' },
+    { question: 'Tu (lire) _____ ce livre demain.', correct: 'vas lire' },
+    { question: 'Elle (faire) _____ les courses cet après-midi.', correct: 'va faire' },
+    { question: 'Nous (voyager) _____ en France cet été.', correct: 'allons voyager' },
+    { question: 'Vous (chanter) _____ à la fête ce week-end.', correct: 'allez chanter' },
+    { question: 'Ils (venir) _____ chez nous ce soir.', correct: 'vont venir' },
+    { question: 'Elle (travailler) _____ au bureau demain.', correct: 'va travailler' },
+    { question: 'Je (dormir) _____ tôt ce soir.', correct: 'vais dormir' },
+    { question: 'Nous (boire) _____ un café après le déjeuner.', correct: 'allons boire' },
+    { question: 'Il (nager) _____ dans la piscine cet après-midi.', correct: 'va nager' },
+    { question: 'Tu (étudier) _____ pour l’examen ce soir.', correct: 'vas étudier' },
+    { question: 'Vous (partir) _____ à 10h demain matin.', correct: 'allez partir' },
+    { question: 'Ils (s’amuser) _____ à la fête ce week-end.', correct: 'vont s’amuser' },
+    { question: 'Nous (jouer) _____ au football demain.', correct: 'allons jouer' },
+    { question: 'Elle (cuisiner) _____ pour le dîner ce soir.', correct: 'va cuisiner' },
+    { question: 'Je (écouter) _____ de la musique après le travail.', correct: 'vais écouter' },
+    { question: 'Vous (regarder) _____ un film demain soir.', correct: 'allez regarder' },
+    { question: 'Ils (danser) _____ toute la nuit à la fête.', correct: 'vont danser' }
+        ];
+
+        // Function to shuffle and select 5 random questions
+        function getRandomQuestions(arr) {
+            return arr.sort(() => 0.5 - Math.random()).slice(0, 5);
+        }
+
+        // Function to display the questions
+        function displayQuestions() {
+            const quizForm = document.getElementById('quizForm');
+            const quizForm1 = document.getElementById('quizForm1');
+
+            quizForm.innerHTML = ''; // Clear the form
+
+            // Get 5 random questions from each section
+            const section1Selected = getRandomQuestions(section1Questions);
+            const section2Selected = getRandomQuestions(section2Questions);
+
+            // Display Section 1 questions
+            section1Selected.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question">
+                        <p>${index + 1}. ${q.pronoun} (${q.verb}) _____</p>
+                        <input type="text" id="q${index + 1}" onblur="validateAnswer(${index + 1}, '${q.correct}')">
+                        <span id="correct-answer-${index + 1}" class="correct-answer">Correct answer: ${q.correct}</span>
+                    </div>
+                `;
+                quizForm.innerHTML += questionHTML;
+            });
+
+            // Display Section 2 questions
+            section2Selected.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question">
+                        <p>${index + 6}. ${q.question}</p>
+                        <input type="text" id="q${index + 6}" onblur="validateAnswer(${index + 6}, '${q.correct}')">
+                        <span id="correct-answer-${index + 6}" class="correct-answer">Correct answer: ${q.correct}</span>
+                    </div>
+                `;
+                quizForm1.innerHTML += questionHTML;
+            });
+
+            // Add the "Check Answers" button
+            quizForm1.innerHTML += `
+                <button type="button" onclick="checkAnswers()">Check exercise</button>
+            `;
+        }
+
+
+        function validateAnswer(questionIndex, correctAnswer) {
+    const userAnswer = document.getElementById('q' + questionIndex).value.trim().toLowerCase();
+    const inputField = document.getElementById('q' + questionIndex);
+
+    // Handle apostrophes and trim spaces from the correct answer
+    const formattedCorrectAnswer = correctAnswer.toLowerCase().replace(/\s+/g, '').replace(/'/g, '');
+
+    // Also remove spaces and apostrophes from the user answer
+    const formattedUserAnswer = userAnswer.replace(/\s+/g, '').replace(/'/g, '');
+
+    if (formattedUserAnswer === formattedCorrectAnswer) {
+        inputField.classList.remove('incorrect');
+        inputField.classList.add('correct');
+        document.getElementById(`correct-answer-${questionIndex}`).style.display = 'none'; // Hide correct answer if right
+    } else {
+        inputField.classList.remove('correct');
+        inputField.classList.add('incorrect');
+    }
+}
+
+
+        // Function to check all answers (on button click)
+        function checkAnswers() {
+            const resultDiv = document.getElementById('result');
+            const inputs = document.querySelectorAll('input[type="text"]');
+            let correctCount = 0;
+
+            inputs.forEach(input => {
+                const questionIndex = input.id.replace('q', '');
+                const correctAnswer = document.getElementById(`correct-answer-${questionIndex}`).innerText.replace('Correct answer: ', '');
+
+                if (input.value.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+                    correctCount++;
+                } else {
+                    document.getElementById(`correct-answer-${questionIndex}`).style.display = 'block'; // Show correct answer if wrong
+                }
+            });
+
+            resultDiv.innerHTML = `You got ${correctCount} out of ${inputs.length} correct!`;
+        }
+
+        // Load questions when the page loads
+        window.onload = displayQuestions;
+    </script>
+
+</body>
+</html>
