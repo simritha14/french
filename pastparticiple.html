@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Verbs - Meaning and Past Participle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 80px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .index-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .index-container a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+        }
+        .index-container a:hover {
+            text-decoration: underline;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .caption {
+            font-size: 20px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .row {
+            display: flex;
+        }
+        
+        .row div {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .row:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .fixed-index {
+            position: sticky;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h3>French Verbs - Meaning and Past Participle</h3>
+        <a href="index.html">Home</a>
+</header>
+
+
+<div class="container">
+    <div id="index-container" class="index-container fixed-index">
+        <!-- Alphabetical Index will be added here -->
+    </div>
+    
+    <div id="tables-container">
+        <!-- Verb meaning and past participles will be injected here by JavaScript -->
+    </div>
+</div>
+
+<script>
+    const verbs = {
+        "Avoir": { "meaning": "to have", "pastParticiple": "eu" },
+        "Être": { "meaning": "to be", "pastParticiple": "été" },
+        "Faire": { "meaning": "to do/make", "pastParticiple": "fait" },
+        "Prendre": { "meaning": "to take", "pastParticiple": "pris" },
+        "Venir": { "meaning": "to come", "pastParticiple": "venu" },
+        "Voir": { "meaning": "to see", "pastParticiple": "vu" },
+        "Mettre": { "meaning": "to put", "pastParticiple": "mis" },
+        "Dire": { "meaning": "to say", "pastParticiple": "dit" },
+        "Écrire": { "meaning": "to write", "pastParticiple": "écrit" },
+        "Lire": { "meaning": "to read", "pastParticiple": "lu" },
+        "Pouvoir": { "meaning": "to be able to", "pastParticiple": "pu" },
+        "Vouloir": { "meaning": "to want", "pastParticiple": "voulu" },
+        "Devoir": { "meaning": "to have to", "pastParticiple": "dû" },
+        "Boire": { "meaning": "to drink", "pastParticiple": "bu" },
+        "Connaître": { "meaning": "to know (people/places)", "pastParticiple": "connu" },
+        "Savoir": { "meaning": "to know (facts/information)", "pastParticiple": "su" },
+        "Ouvrir": { "meaning": "to open", "pastParticiple": "ouvert" },
+        "Courir": { "meaning": "to run", "pastParticiple": "couru" },
+        "Recevoir": { "meaning": "to receive", "pastParticiple": "reçu" },
+        "Vivre": { "meaning": "to live", "pastParticiple": "vécu" }
+    };
+
+    function generateTable(verb, data) {
+        let tableHtml = `
+            <div id="${verb.charAt(0).toUpperCase()}" class="table">
+                <div class="caption">${verb}</div>
+                <div class="row">
+                    <div>Meaning</div>
+                    <div>${data.meaning}</div>
+                </div>
+                <div class="row">
+                    <div>Past Participle</div>
+                    <div>${data.pastParticiple}</div>
+                </div>
+            </div>`;
+        return tableHtml;
+    }
+
+    function renderTables() {
+        const container = document.getElementById('tables-container');
+        let htmlContent = '';
+        let letters = new Set();
+
+        for (const verb in verbs) {
+            const firstLetter = verb.charAt(0).toUpperCase();
+            letters.add(firstLetter);
+            htmlContent += generateTable(verb, verbs[verb]);
+        }
+        container.innerHTML = htmlContent;
+
+        // Render the alphabet links
+        const indexContainer = document.getElementById('index-container');
+        let indexHtml = '';
+        for (const letter of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+            if (letters.has(letter)) {
+                indexHtml += `<a href="#${letter}" class="alphabet-link">${letter}</a>`;
+            }
+        }
+        indexContainer.innerHTML = indexHtml;
+
+        // Add event listener to alphabet links
+        const alphabetLinks = document.querySelectorAll('.alphabet-link');
+        alphabetLinks.forEach((link) => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const letter = link.textContent;
+                const tables = document.querySelectorAll(`.table[id^="${letter}"]`);
+                if (tables.length > 0) {
+                    tables[0].scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add event listener to up arrow link
+        const upArrowLink = document.querySelector('.up-arrow');
+        upArrowLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        });
+    }
+
+    renderTables();
+</script>
+
+</body>
+</html>
