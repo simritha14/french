@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Futur Proche Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            text-align: center;
+            margin: 20px 0;
+        }
+        nav a {
+            margin: 0 15px;
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .section-instruction {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 50%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .correct {
+            background-color: #c8e6c9; /* Light green background */
+            border-color: #2e7d32;    /* Dark green border */
+        }
+        .incorrect {
+            background-color: #ffccbc; /* Light red background */
+            border-color: #d32f2f;    /* Dark red border */
+        }
+        .correct-answer {
+            display: none;
+            color: #2e7d32;
+            font-size: 14px;
+        }
+        .tooltip {
+            display: none;
+            margin-left: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>French Futur Proche Quiz</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+    </nav>
+
+    <div class="quiz-container">
+        <p class="section-instruction">Complete the sentences with the correct form of venir.</p>
+
+        <form id="quizForm">
+            <!-- Questions will be dynamically injected here -->
+        </form>
+
+        <p class="section-instruction">Complete the sentences with the correct form of venir in imparfait tense.</p>
+
+        <form id="quizForm1">
+            <!-- Questions will be dynamically injected here -->
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Question pools
+const section1Questions = [
+    { "question": "Nous (venir) _____ de finir nos devoirs.", "correct": "venons", "translation": "We just finished our homework." },
+    { "question": "Je (venir) _____ de voir mon ami au café.", "correct": "viens", "translation": "I just saw my friend at the café." },
+    { "question": "Ils (venir) _____ de partir pour la plage.", "correct": "viennent", "translation": "They just left for the beach." },
+    { "question": "Elle (venir) _____ de lire un bon livre.", "correct": "vient", "translation": "She just finished reading a good book." },
+    { "question": "Tu (venir) _____ de finir tes courses ?", "correct": "viens", "translation": "Did you just finish your shopping?" },
+    { "question": "Nous (venir) _____ de parler à nos parents.", "correct": "venons", "translation": "We just talked to our parents." },
+    { "question": "Vous (venir) _____ de terminer votre travail.", "correct": "venez", "translation": "You just finished your work." },
+    { "question": "Les enfants (venir) _____ de jouer dans le parc.", "correct": "viennent", "translation": "The children just played in the park." },
+    { "question": "Je (venir) _____ de rencontrer quelqu'un de sympa.", "correct": "viens", "translation": "I just met someone nice." },
+    { "question": "Est-ce que vous (venir) _____ de dîner ?", "correct": "venez", "translation": "Did you just have dinner?" },
+    { "question": "Elles (venir) _____ de commencer un nouveau projet.", "correct": "viennent", "translation": "They just started a new project." },
+    { "question": "Christine (venir) _____ d'apprendre une bonne nouvelle.", "correct": "vient", "translation": "Christine just heard some good news." },
+    { "question": "Nous (venir) _____ de découvrir un nouveau restaurant.", "correct": "venons", "translation": "We just discovered a new restaurant." },
+    { "question": "Tu (venir) _____ de t’inscrire à la gym ?", "correct": "viens", "translation": "Did you just sign up for the gym?" },
+    { "question": "Ils (venir) _____ d’acheter une nouvelle voiture.", "correct": "viennent", "translation": "They just bought a new car." },
+    { "question": "Je (venir) _____ de recevoir un cadeau.", "correct": "viens", "translation": "I just received a gift." },
+    { "question": "Nous (venir) _____ d’arriver à l’aéroport.", "correct": "venons", "translation": "We just arrived at the airport." },
+    { "question": "Est-ce que tu (venir) _____ de me téléphoner ?", "correct": "viens", "translation": "Did you just call me?" },
+    { "question": "Vous (venir) _____ de rater le début du film.", "correct": "venez", "translation": "You just missed the beginning of the movie." },
+    { "question": "Les filles (venir) _____ de préparer le dîner.", "correct": "viennent", "translation": "The girls just prepared dinner." },
+    { "question": "Il (venir) _____ de finir son entraînement.", "correct": "vient", "translation": "He just finished his training." },
+    { "question": "Nous (venir) _____ de prendre une décision importante.", "correct": "venons", "translation": "We just made an important decision." },
+    { "question": "Elles (venir) _____ de ranger leur chambre.", "correct": "viennent", "translation": "They just cleaned up their room." },
+    { "question": "Tu (venir) _____ de perdre tes clés ?", "correct": "viens", "translation": "Did you just lose your keys?" },
+    { "question": "Vous (venir) _____ d’étudier pour l’examen ?", "correct": "venez", "translation": "Did you just study for the exam?" },
+    { "question": "Je (venir) _____ de recevoir une promotion.", "correct": "viens", "translation": "I just got a promotion." },
+    { "question": "Ils (venir) _____ de prendre leur petit déjeuner.", "correct": "viennent", "translation": "They just had their breakfast." },
+    { "question": "Elle (venir) _____ de découvrir une nouvelle série.", "correct": "vient", "translation": "She just discovered a new series." },
+    { "question": "Nous (venir) _____ de visiter le musée.", "correct": "venons", "translation": "We just visited the museum." },
+    { "question": "Je (venir) _____ de finir mon livre.", "correct": "viens", "translation": "I just finished my book." }
+];
+
+const section2Questions = [
+    { "question": "Tu (venir) _____ de sortir lorsqu’il s’est mis à pleuvoir.", "correct": "venais", "translation": "You had just gone out when it started raining." },
+    { "question": "Nous (venir) _____ de terminer le dessert lorsque les voisins ont sonné à la porte.", "correct": "venions", "translation": "We had just finished dessert when the neighbors rang the doorbell." },
+    { "question": "Le musée (venir) _____ de fermer quand je suis arrivé pour voir les tableaux.", "correct": "venait", "translation": "The museum had just closed when I arrived to see the paintings." },
+    { "question": "Je (venir) _____ de m’endormir quand le téléphone a sonné.", "correct": "venais", "translation": "I had just fallen asleep when the phone rang." },
+    { "question": "Les élèves (venir) _____ de s’asseoir quand le professeur est entré dans la classe.", "correct": "venaient", "translation": "The students had just sat down when the teacher entered the classroom." },
+    { "question": "Est-ce que vous (venir) _____ d’aller faire les courses quand je suis arrivé ?", "correct": "veniez", "translation": "Had you just gone shopping when I arrived?" },
+    { "question": "Sophie (venir) _____ de laver le sol lorsque le paquet de farine tomba par terre.", "correct": "venait", "translation": "Sophie had just washed the floor when the bag of flour fell on the ground." },
+    { "question": "Ils (venir) _____ de prendre leur décision lorsqu’on les a interrompus.", "correct": "venaient", "translation": "They had just made their decision when they were interrupted." },
+    { "question": "Nous (venir) _____ de commencer à dîner quand l’alarme s’est déclenchée.", "correct": "venions", "translation": "We had just started dinner when the alarm went off." },
+    { "question": "Tu (venir) _____ d’éteindre la lumière quand on a entendu un bruit.", "correct": "venais", "translation": "You had just turned off the light when we heard a noise." },
+    { "question": "Je (venir) _____ de ranger mes affaires lorsque tu as frappé à la porte.", "correct": "venais", "translation": "I had just put away my things when you knocked on the door." },
+    { "question": "Les enfants (venir) _____ de terminer leurs devoirs quand leurs parents sont rentrés.", "correct": "venaient", "translation": "The children had just finished their homework when their parents came home." },
+    { "question": "Vous (venir) _____ de partir quand j’ai vu votre message.", "correct": "veniez", "translation": "You had just left when I saw your message." },
+    { "question": "Elle (venir) _____ d’allumer la télévision quand le courant s’est coupé.", "correct": "venait", "translation": "She had just turned on the TV when the power went out." },
+    { "question": "Nous (venir) _____ de signer le contrat quand une meilleure offre est arrivée.", "correct": "venions", "translation": "We had just signed the contract when a better offer arrived." },
+    { "question": "Ils (venir) _____ d’ouvrir la bouteille lorsque quelqu’un a frappé à la porte.", "correct": "venaient", "translation": "They had just opened the bottle when someone knocked on the door." },
+    { "question": "Je (venir) _____ de terminer la vaisselle quand mon ami est arrivé.", "correct": "venais", "translation": "I had just finished the dishes when my friend arrived." },
+    { "question": "Vous (venir) _____ d’éteindre la lumière quand la musique a commencé.", "correct": "veniez", "translation": "You had just turned off the light when the music started." },
+    { "question": "Les filles (venir) _____ de commencer à cuisiner quand je suis rentré.", "correct": "venaient", "translation": "The girls had just started cooking when I got home." },
+    { "question": "Tu (venir) _____ de finir le film quand je t’ai appelé.", "correct": "venais", "translation": "You had just finished the movie when I called you." }
+];
+
+        // Function to shuffle and select 5 random questions
+        function getRandomQuestions(arr) {
+            return arr.sort(() => 0.5 - Math.random()).slice(0, 5);
+        }
+
+        // Function to display the questions
+        function displayQuestions() {
+            const quizForm = document.getElementById('quizForm');
+            const quizForm1 = document.getElementById('quizForm1');
+
+            quizForm.innerHTML = ''; // Clear the form
+
+            // Get 5 random questions from each section
+            const section1Selected = getRandomQuestions(section1Questions);
+            const section2Selected = getRandomQuestions(section2Questions);
+
+            // Display Section 1 questions
+            section1Selected.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question">
+                        <p>${index + 1}. ${q.pronoun} (${q.verb}) _____
+                            <span class="tooltip" id="tooltip-${index + 1}" title="${q.translation}">🔍</span>
+                        </p>
+                        <input type="text" id="q${index + 1}" onblur="validateAnswer(${index + 1}, '${q.correct}')">
+                        <span id="correct-answer-${index + 1}" class="correct-answer">Correct answer: ${q.correct}</span>
+                    </div>
+                `;
+                quizForm.innerHTML += questionHTML;
+            });
+
+            // Display Section 2 questions
+            section2Selected.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question">
+                        <p>${index + 6}. ${q.question}
+                            <span class="tooltip" id="tooltip-${index + 6}" title="${q.translation}">🔍</span>
+                        </p>
+                        <input type="text" id="q${index + 6}" onblur="validateAnswer(${index + 6}, '${q.correct}')">
+                        <span id="correct-answer-${index + 6}" class="correct-answer">Correct answer: ${q.correct}</span>
+                    </div>
+                `;
+                quizForm1.innerHTML += questionHTML;
+            });
+
+            // Add the "Check Answers" button
+            quizForm1.innerHTML += `
+                <button type="button" onclick="checkAnswers()">Check exercise</button>
+            `;
+        }
+
+        function validateAnswer(questionIndex, correctAnswer) {
+            const userAnswer = document.getElementById('q' + questionIndex).value.trim().toLowerCase();
+            const inputField = document.getElementById('q' + questionIndex);
+
+            // Handle apostrophes and trim spaces from the correct answer
+            const formattedCorrectAnswer = correctAnswer.toLowerCase().replace(/\s+/g, '').replace(/'/g, '');
+
+            // Also format the user's answer similarly
+            const formattedUserAnswer = userAnswer.replace(/\s+/g, '').replace(/'/g, '');
+
+            if (formattedUserAnswer === formattedCorrectAnswer) {
+                inputField.classList.remove('incorrect');
+                inputField.classList.add('correct');
+                document.getElementById(`correct-answer-${questionIndex}`).style.display = 'none'; // Hide correct answer if right
+            } else {
+                inputField.classList.remove('correct');
+                inputField.classList.add('incorrect');
+            }
+        }
+
+        // Function to check all answers (on button click)
+        function checkAnswers() {
+            const resultDiv = document.getElementById('result');
+            const inputs = document.querySelectorAll('input[type="text"]');
+            let correctCount = 0;
+
+            inputs.forEach(input => {
+                const questionIndex = input.id.replace('q', '');
+                const correctAnswer = document.getElementById(`correct-answer-${questionIndex}`).innerText.replace('Correct answer: ', '');
+
+                if (input.value.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+                    correctCount++;
+                } else {
+                    document.getElementById(`correct-answer-${questionIndex}`).style.display = 'block'; // Show correct answer if wrong
+                }
+
+                // Make the tooltip visible after the check
+                document.getElementById(`tooltip-${questionIndex}`).style.display = 'inline';
+            });
+
+            resultDiv.innerHTML = `You got ${correctCount} out of ${inputs.length} correct!`;
+        }
+
+        // Load questions when the page loads
+        window.onload = displayQuestions;
+    </script>
+
+</body>
+</html>
+
+
+
