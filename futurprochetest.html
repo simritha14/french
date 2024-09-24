@@ -98,6 +98,13 @@
             color: #2e7d32;
             font-size: 14px;
         }
+        .tooltip {
+            display: none;
+            margin-left: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #4CAF50;
+        }
     </style>
 </head>
 <body>
@@ -116,7 +123,8 @@
         <form id="quizForm">
             <!-- Questions will be dynamically injected here -->
         </form>
-                <p class="section-instruction">Complete the sentences with the futur proche form of the verbs in brackets:</p>
+
+        <p class="section-instruction">Complete the sentences with the futur proche form of the verbs in brackets:</p>
 
         <form id="quizForm1">
             <!-- Questions will be dynamically injected here -->
@@ -128,49 +136,24 @@
     <script>
         // Question pools
         const section1Questions = [
-    { pronoun: 'Nous', verb: 'marcher', correct: 'allons' },
-    { pronoun: 'Je', verb: 'manger', correct: 'vais' },
-    { pronoun: 'Ils', verb: 'parler', correct: 'vont' },
-    { pronoun: 'Tu', verb: 'lire', correct: 'vas' },
-    { pronoun: 'Elle', verb: 'faire', correct: 'va' },
-    { pronoun: 'Nous', verb: 'voyager', correct: 'allons' },
-    { pronoun: 'Vous', verb: 'chanter', correct: 'allez' },
-    { pronoun: 'Ils', verb: 'venir', correct: 'vont' },
-    { pronoun: 'Elle', verb: 'travailler', correct: 'va' },
-    { pronoun: 'Je', verb: 'dormir', correct: 'vais' },
-    { pronoun: 'Nous', verb: 'boire', correct: 'allons' },
-    { pronoun: 'Il', verb: 'nager', correct: 'va' },
-    { pronoun: 'Tu', verb: 'étudier', correct: 'vas' },
-    { pronoun: 'Vous', verb: 'partir', correct: 'allez' },
-    { pronoun: 'Ils', verb: 's\'amuser', correct: 'vont' },
-    { pronoun: 'Nous', verb: 'jouer', correct: 'allons' },
-    { pronoun: 'Elle', verb: 'cuisiner', correct: 'va' },
-    { pronoun: 'Je', verb: 'écouter', correct: 'vais' },
-    { pronoun: 'Vous', verb: 'regarder', correct: 'allez' },
-    { pronoun: 'Ils', verb: 'danser', correct: 'vont' }
+            { pronoun: 'Nous', verb: 'marcher', correct: 'allons', translation: 'We are going to walk' },
+            { pronoun: 'Je', verb: 'manger', correct: 'vais', translation: 'I am going to eat' },
+            { pronoun: 'Ils', verb: 'parler', correct: 'vont', translation: 'They are going to speak' },
+            { pronoun: 'Tu', verb: 'lire', correct: 'vas', translation: 'You are going to read' },
+            { pronoun: 'Elle', verb: 'faire', correct: 'va', translation: 'She is going to do' },
+            { pronoun: 'Nous', verb: 'voyager', correct: 'allons', translation: 'We are going to travel' },
+            { pronoun: 'Vous', verb: 'chanter', correct: 'allez', translation: 'You are going to sing' },
+            { pronoun: 'Ils', verb: 'venir', correct: 'vont', translation: 'They are going to come' },
+            { pronoun: 'Elle', verb: 'travailler', correct: 'va', translation: 'She is going to work' },
+            { pronoun: 'Je', verb: 'dormir', correct: 'vais', translation: 'I am going to sleep' }
         ];
 
         const section2Questions = [
-  { question: 'Nous (partir) _____ en vacances demain.', correct: 'allons partir' },
-    { question: 'Je (manger) _____ au restaurant ce soir.', correct: 'vais manger' },
-    { question: 'Ils (parler) _____ avec le directeur bientôt.', correct: 'vont parler' },
-    { question: 'Tu (lire) _____ ce livre demain.', correct: 'vas lire' },
-    { question: 'Elle (faire) _____ les courses cet après-midi.', correct: 'va faire' },
-    { question: 'Nous (voyager) _____ en France cet été.', correct: 'allons voyager' },
-    { question: 'Vous (chanter) _____ à la fête ce week-end.', correct: 'allez chanter' },
-    { question: 'Ils (venir) _____ chez nous ce soir.', correct: 'vont venir' },
-    { question: 'Elle (travailler) _____ au bureau demain.', correct: 'va travailler' },
-    { question: 'Je (dormir) _____ tôt ce soir.', correct: 'vais dormir' },
-    { question: 'Nous (boire) _____ un café après le déjeuner.', correct: 'allons boire' },
-    { question: 'Il (nager) _____ dans la piscine cet après-midi.', correct: 'va nager' },
-    { question: 'Tu (étudier) _____ pour l’examen ce soir.', correct: 'vas étudier' },
-    { question: 'Vous (partir) _____ à 10h demain matin.', correct: 'allez partir' },
-    { question: 'Ils (s’amuser) _____ à la fête ce week-end.', correct: 'vont s’amuser' },
-    { question: 'Nous (jouer) _____ au football demain.', correct: 'allons jouer' },
-    { question: 'Elle (cuisiner) _____ pour le dîner ce soir.', correct: 'va cuisiner' },
-    { question: 'Je (écouter) _____ de la musique après le travail.', correct: 'vais écouter' },
-    { question: 'Vous (regarder) _____ un film demain soir.', correct: 'allez regarder' },
-    { question: 'Ils (danser) _____ toute la nuit à la fête.', correct: 'vont danser' }
+            { question: 'Nous (partir) _____ en vacances demain.', correct: 'allons partir', translation: 'We are going to leave on vacation tomorrow.' },
+            { question: 'Je (manger) _____ au restaurant ce soir.', correct: 'vais manger', translation: 'I am going to eat at the restaurant tonight.' },
+            { question: 'Ils (parler) _____ avec le directeur bientôt.', correct: 'vont parler', translation: 'They are going to speak with the director soon.' },
+            { question: 'Tu (lire) _____ ce livre demain.', correct: 'vas lire', translation: 'You are going to read this book tomorrow.' },
+            { question: 'Elle (faire) _____ les courses cet après-midi.', correct: 'va faire', translation: 'She is going to do the shopping this afternoon.' }
         ];
 
         // Function to shuffle and select 5 random questions
@@ -193,7 +176,9 @@
             section1Selected.forEach((q, index) => {
                 const questionHTML = `
                     <div class="question">
-                        <p>${index + 1}. ${q.pronoun} (${q.verb}) _____</p>
+                        <p>${index + 1}. ${q.pronoun} (${q.verb}) _____
+                            <span class="tooltip" id="tooltip-${index + 1}" title="${q.translation}">🔍</span>
+                        </p>
                         <input type="text" id="q${index + 1}" onblur="validateAnswer(${index + 1}, '${q.correct}')">
                         <span id="correct-answer-${index + 1}" class="correct-answer">Correct answer: ${q.correct}</span>
                     </div>
@@ -205,7 +190,9 @@
             section2Selected.forEach((q, index) => {
                 const questionHTML = `
                     <div class="question">
-                        <p>${index + 6}. ${q.question}</p>
+                        <p>${index + 6}. ${q.question}
+                            <span class="tooltip" id="tooltip-${index + 6}" title="${q.translation}">🔍</span>
+                        </p>
                         <input type="text" id="q${index + 6}" onblur="validateAnswer(${index + 6}, '${q.correct}')">
                         <span id="correct-answer-${index + 6}" class="correct-answer">Correct answer: ${q.correct}</span>
                     </div>
@@ -219,27 +206,25 @@
             `;
         }
 
-
         function validateAnswer(questionIndex, correctAnswer) {
-    const userAnswer = document.getElementById('q' + questionIndex).value.trim().toLowerCase();
-    const inputField = document.getElementById('q' + questionIndex);
+            const userAnswer = document.getElementById('q' + questionIndex).value.trim().toLowerCase();
+            const inputField = document.getElementById('q' + questionIndex);
 
-    // Handle apostrophes and trim spaces from the correct answer
-    const formattedCorrectAnswer = correctAnswer.toLowerCase().replace(/\s+/g, '').replace(/'/g, '');
+            // Handle apostrophes and trim spaces from the correct answer
+            const formattedCorrectAnswer = correctAnswer.toLowerCase().replace(/\s+/g, '').replace(/'/g, '');
 
-    // Also remove spaces and apostrophes from the user answer
-    const formattedUserAnswer = userAnswer.replace(/\s+/g, '').replace(/'/g, '');
+            // Also format the user's answer similarly
+            const formattedUserAnswer = userAnswer.replace(/\s+/g, '').replace(/'/g, '');
 
-    if (formattedUserAnswer === formattedCorrectAnswer) {
-        inputField.classList.remove('incorrect');
-        inputField.classList.add('correct');
-        document.getElementById(`correct-answer-${questionIndex}`).style.display = 'none'; // Hide correct answer if right
-    } else {
-        inputField.classList.remove('correct');
-        inputField.classList.add('incorrect');
-    }
-}
-
+            if (formattedUserAnswer === formattedCorrectAnswer) {
+                inputField.classList.remove('incorrect');
+                inputField.classList.add('correct');
+                document.getElementById(`correct-answer-${questionIndex}`).style.display = 'none'; // Hide correct answer if right
+            } else {
+                inputField.classList.remove('correct');
+                inputField.classList.add('incorrect');
+            }
+        }
 
         // Function to check all answers (on button click)
         function checkAnswers() {
@@ -256,6 +241,9 @@
                 } else {
                     document.getElementById(`correct-answer-${questionIndex}`).style.display = 'block'; // Show correct answer if wrong
                 }
+
+                // Make the tooltip visible after the check
+                document.getElementById(`tooltip-${questionIndex}`).style.display = 'inline';
             });
 
             resultDiv.innerHTML = `You got ${correctCount} out of ${inputs.length} correct!`;
