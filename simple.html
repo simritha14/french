@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-
-    <title>French Futur Simple Quiz</title>
+    <title>French Passé Simple Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -112,7 +111,7 @@
 <body>
 
     <header>
-        <h1>French Futur Simple Quiz</h1>
+        <h1>French Passé Simple Quiz</h1>
     </header>
 
     <nav>
@@ -131,12 +130,12 @@
         <form id="quizForm1">
             <!-- Questions will be dynamically injected here -->
         </form>
-        <p class="section-instruction">Complete the sentences with the futur simple form of the verbs in brackets. Remember – not all verbs follow the regular conjugation rules.</p>
+        
+        <p class="section-instruction">Complete the sentences with the futur simple form of the verbs in brackets. Remember – not all verbs follow the regular conjugation rules</p>
 
         <form id="quizForm2">
             <!-- Questions will be dynamically injected here -->
         </form>
-
 
         <div id="result"></div>
     </div>
@@ -229,6 +228,7 @@ const section3Questions = [
             const quizForm1 = document.getElementById('quizForm1');
             const quizForm2 = document.getElementById('quizForm2');
 
+
             quizForm.innerHTML = ''; // Clear the form
 
             // Get 5 random questions from each section
@@ -241,10 +241,10 @@ const section3Questions = [
             section1Selected.forEach((q, index) => {
                 const questionHTML = `
                     <div class="question">
-                        <p>${index + 1}. ${q.question}
+                        <p>${index + 1}.${q.question}
                             <span class="tooltip" id="tooltip-${index + 1}" title="${q.translation}">🔍</span>
                         </p>
-                        <input type="text" id="q${index + 1}" onblur="validateAnswer(${index + 1, '${q.correct}')">
+                        <input type="text" id="q${index + 1}" onblur="validateAnswer(${index + 1}, '${q.correct}')">
                         <span id="correct-answer-${index + 1}" class="correct-answer">Correct answer: ${q.correct}</span>
                     </div>
                 `;
@@ -264,9 +264,9 @@ const section3Questions = [
                 `;
                 quizForm1.innerHTML += questionHTML;
             });
-
+            
             // Display Section 3 questions
-            section3Selected.forEach((q, index) => {
+            section2Selected.forEach((q, index) => {
                 const questionHTML = `
                     <div class="question">
                         <p>${index + 11}. ${q.question}
@@ -277,7 +277,9 @@ const section3Questions = [
                     </div>
                 `;
                 quizForm2.innerHTML += questionHTML;
-            });
+            });            
+            
+            
 
             // Add the "Check Answers" button
             quizForm2.innerHTML += `
