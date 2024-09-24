@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>French Futur Proche Quiz</title>
+    <title>French Passé Récent Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -110,7 +110,7 @@
 <body>
 
     <header>
-        <h1>French Futur Proche Quiz</h1>
+        <h1>French Passé Récent Quiz</h1>
     </header>
 
     <nav>
@@ -211,7 +211,7 @@ const section2Questions = [
             section1Selected.forEach((q, index) => {
                 const questionHTML = `
                     <div class="question">
-                        <p>${index + 1}. ${q.pronoun} (${q.verb}) _____
+                        <p>${index + 1}.${q.question}
                             <span class="tooltip" id="tooltip-${index + 1}" title="${q.translation}">🔍</span>
                         </p>
                         <input type="text" id="q${index + 1}" onblur="validateAnswer(${index + 1}, '${q.correct}')">
