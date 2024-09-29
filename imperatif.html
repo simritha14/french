@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <title>French Passé Simple Quiz</title>
+    <title>French L’impératif Quiz</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -100,17 +101,24 @@
             font-size: 14px;
         }
         .tooltip {
-            display: none;  /* Tooltip hidden by default */
-            margin-left: 5px;
+            display: none;
+            /*margin-left: 5px;*/
+            background-color: white;
+            cursor: pointer;
             font-size: 14px;
             color: #4CAF50;
         }
-   </style>
+        .translation{
+        color: blue;
+        font-size: 12px;
+
+        }
+    </style>
 </head>
 <body>
 
     <header>
-        <h1>French Passé Simple Quiz</h1>
+        <h1>French L’impératif Quiz</h1>
     </header>
 
     <nav>
@@ -120,19 +128,27 @@
     <div class="quiz-container">
         <p class="section-instruction">Complete the gaps with the imperative for the 2nd person singular (tu).</p>
 
-        <form id="quizForm"></form>
-        <p class="section-instruction">Complete the gaps with the imperative for the 1st person plural (nous).</p>
+        <form id="quizForm">
+            <!-- Questions will be dynamically injected here -->
+        </form>
 
-        <form id="quizForm1"></form>
-        <p class="section-instruction">Complete the gaps with the imperative for the 2nd person plural (vous)</p>
+        <p class="section-instruction">Section 2: Complete the gaps with the imperative for the 1st person plural (nous).</p>
 
-        <form id="quizForm2"></form>
+        <form id="quizForm1">
+            <!-- Questions will be dynamically injected here -->
+        </form>
         
+        <p class="section-instruction">Section 3: Complete the gaps with the imperative for the 2nd person plural (vous).</p>
+
+        <form id="quizForm2">
+            <!-- Questions will be dynamically injected here -->
+        </form>
+
         <div id="result"></div>
     </div>
 
     <script>
-        // Question pools (existing question arrays)
+        // Question pools
 const section1Questions = [
     { "question": "(parler/avec elle) __________", "correct": "Parle avec elle", "translation": "Speak with her." },
     { "question": "(finir/tes devoirs) __________", "correct": "Finis tes devoirs", "translation": "Finish your homework." },
@@ -174,6 +190,8 @@ const section1Questions = [
     { "question": "(aller/à la boulangerie) __________", "correct": "Va à la boulangerie", "translation": "Go to the bakery." },
     { "question": "(prendre/un taxi) __________", "correct": "Prends un taxi", "translation": "Take a taxi." },
 ];
+
+
 const section2Questions = [
     { "question": "(payer/l'addition) __________", "correct": "Payons l'addition", "translation": "Let's pay the bill." },
     { "question": "(finir/nos devoirs) __________", "correct": "Finissons nos devoirs", "translation": "Let's finish our homework." },
@@ -254,107 +272,90 @@ const section3Questions = [
     { "question": "(partir/immédiatement) __________", "correct": "Partez immédiatement", "translation": "Leave immediately." },
 ];
 
+
         // Function to shuffle and select 5 random questions
         function getRandomQuestions(arr) {
             return arr.sort(() => 0.5 - Math.random()).slice(0, 5);
         }
+function displayQuestions() {
+    const quizForm = document.getElementById('quizForm');
+    const quizForm1 = document.getElementById('quizForm1');
+    const quizForm2 = document.getElementById('quizForm2');
 
-        // Function to display the questions
-        function displayQuestions() {
-            const quizForm = document.getElementById('quizForm');
-            const quizForm1 = document.getElementById('quizForm1');
-            const quizForm2 = document.getElementById('quizForm2');
+
+    quizForm.innerHTML = ''; // Clear the form
+
+    // Get 5 random questions from each section
+    const section1Selected = getRandomQuestions(section1Questions);
+    const section2Selected = getRandomQuestions(section2Questions);
+    const section3Selected = getRandomQuestions(section3Questions);
+
+
+    // Display Section 1 questions
+    section1Selected.forEach((q, index) => {
+        const questionHTML = `
+            <div class="question">
+                <p>${index + 1}.${q.question}
+                   <button type="button" class="tooltip" id="tooltip-${index + 1}" title="${q.translation}">🔍</button>
+                 <span id="translation-${index + 1}" class="translation"></span>
+                </p>
+                <input type="text" id="q${index + 1}" onblur="validateAnswer(${index + 1}, '${q.correct}')">
+                <span id="correct-answer-${index + 1}" class="correct-answer">Correct answer: ${q.correct}</span>
+            </div>
+        `;
+        quizForm.innerHTML += questionHTML;
+    });
+
+    // Display Section 2 questions
+    section2Selected.forEach((q, index) => {
+        const questionHTML = `
+            <div class="question">
+                <p>${index + 6}. ${q.question}
+                    <button type="button" class="tooltip" id="tooltip-${index + 6}" title="${q.translation}">🔍</button>
+                    <span id="translation-${index + 6}" class="translation"></span>
+
+                </p>
+                <input type="text" id="q${index + 6}" onblur="validateAnswer(${index + 6}, '${q.correct}')">
+                <span id="correct-answer-${index + 6}" class="correct-answer">Correct answer: ${q.correct}</span>
+            </div>
+        `;
+        quizForm1.innerHTML += questionHTML;
+    });
+    
+    // Display Section 3 questions
+    section3Selected.forEach((q, index) => {
+        const questionHTML = `
+            <div class="question">
+                <p>${index + 11}. ${q.question}
+                   <button type="button" class="tooltip" id="tooltip-${index + 11}" title="${q.translation}">🔍</button>
+                   <span id="translation-${index + 11}" class="translation"></span>
+
+                </p>
+                <input type="text" id="q${index + 11}" onblur="validateAnswer(${index + 11}, '${q.correct}')">
+                <span id="correct-answer-${index + 11}" class="correct-answer">Correct answer: ${q.correct}</span>
+            </div>
+        `;
+        quizForm2.innerHTML += questionHTML;
+    });            
             
-            quizForm.innerHTML = ''; // Clear the form
+            
 
-            // Get 5 random questions from each section
-            const section1Selected = getRandomQuestions(section1Questions);
-            const section2Selected = getRandomQuestions(section2Questions);
-            const section3Selected = getRandomQuestions(section3Questions);
+    // Add the "Check Answers" button
+    quizForm2.innerHTML += `
+        <button type="button" onclick="checkAnswers()">Check exercise</button>
+    `;
 
-            // Display Section 1 questions
-            section1Selected.forEach((q, index) => {
-                const questionHTML = `
-                    <div class="question">
-                        <p>${index + 1}. ${q.question}
-                            <span class="tooltip" id="tooltip-${index + 1}">${q.translation}</span>
-                            <span class="tooltip-icon" id="icon-${index + 1}" onclick="toggleTooltip(${index + 1})">🔍</span>
-                        </p>
-                        <input type="text" id="q${index + 1}" onblur="validateAnswer(${index + 1}, '${q.correct}')">
-                        <span id="correct-answer-${index + 1}" class="correct-answer">Correct answer: ${q.correct}</span>
-                    </div>
-                `;
-                quizForm.innerHTML += questionHTML;
-            });
-
-            // Display Section 2 questions
-            section2Selected.forEach((q, index) => {
-                const questionHTML = `
-                    <div class="question">
-                        <p>${index + 6}. ${q.question}
-                            <span class="tooltip" id="tooltip-${index + 6}">${q.translation}</span>
-                            <span class="tooltip-icon" id="icon-${index + 6}" onclick="toggleTooltip(${index + 6})">🔍</span>
-                        </p>
-                        <input type="text" id="q${index + 6}" onblur="validateAnswer(${index + 6}, '${q.correct}')">
-                        <span id="correct-answer-${index + 6}" class="correct-answer">Correct answer: ${q.correct}</span>
-                    </div>
-                `;
-                quizForm1.innerHTML += questionHTML;
-            });
-
-            // Display Section 3 questions
-            section3Selected.forEach((q, index) => {
-                const questionHTML = `
-                    <div class="question">
-                        <p>${index + 11}. ${q.question}
-                            <span class="tooltip" id="tooltip-${index + 11}">${q.translation}</span>
-                            <span class="tooltip-icon" id="icon-${index + 11}" onclick="toggleTooltip(${index + 11})">🔍</span>
-                        </p>
-                        <input type="text" id="q${index + 11}" onblur="validateAnswer(${index + 11}, '${q.correct}')">
-                        <span id="correct-answer-${index + 11}" class="correct-answer">Correct answer: ${q.correct}</span>
-                    </div>
-                `;
-                quizForm2.innerHTML += questionHTML;
-            });
-
-            // Add the "Check Answers" button
-            quizForm2.innerHTML += `
-                <button type="button" onclick="checkAnswers()">Check exercise</button>
-            `;
-        }
-
-        // Toggle tooltip visibility when clicking the icon
-        function toggleTooltip(index) {
-            const tooltip = document.getElementById(`tooltip-${index}`);
-            if (tooltip.style.display === 'none' || tooltip.style.display === '') {
-                tooltip.style.display = 'inline';  // Show translation
-            } else {
-                tooltip.style.display = 'none';  // Hide translation
-            }
-        }
-
-        function validateAnswer(questionIndex, correctAnswer) {
-            const userAnswer = document.getElementById('q' + questionIndex).value.trim().toLowerCase();
-            const inputField = document.getElementById('q' + questionIndex);
-
-            // Handle apostrophes and trim spaces from the correct answer
-            const formattedCorrectAnswer = correctAnswer.toLowerCase().replace(/\s+/g, '').replace(/'/g, '');
-
-            // Also format the user's answer similarly
-            const formattedUserAnswer = userAnswer.replace(/\s+/g, '').replace(/'/g, '');
-
-            if (formattedUserAnswer === formattedCorrectAnswer) {
-                inputField.classList.remove('incorrect');
-                inputField.classList.add('correct');
-                document.getElementById(`correct-answer-${questionIndex}`).style.display = 'none'; // Hide correct answer if right
-            } else {
-                inputField.classList.remove('correct');
-                inputField.classList.add('incorrect');
-            }
-        }
-
-        // Function to check all answers (on button click)
-        
+    // Add event listeners to the tooltips
+    const tooltips = document.querySelectorAll('.tooltip');
+    tooltips.forEach(tooltip => {
+        tooltip.addEventListener('click', () => {
+            const questionIndex = tooltip.id.replace('tooltip-', '');
+            const translation = document.getElementById(`translation-${questionIndex}`);
+            translation.innerText = tooltip.title;
+        });
+    });
+}
+// Function to check all answers (on button click)
 function checkAnswers() {
     const resultDiv = document.getElementById('result');
     const inputs = document.querySelectorAll('input[type="text"]');
@@ -374,15 +375,15 @@ function checkAnswers() {
         document.getElementById(`tooltip-${questionIndex}`).style.display = 'inline';
     });
 
-    // Update result display (optional)
-    resultDiv.innerText = `You got ${correctCount} out of ${inputs.length} correct!`;
-}
+    resultDiv.innerHTML = `You got ${correctCount} out of ${inputs.length} correct!`;
 
-            resultDiv.innerHTML = `You got ${correctCount} out of ${inputs.length} correct!`;
-        }
+    return false;
+}
+         
 
         // Load questions when the page loads
         window.onload = displayQuestions;
     </script>
+
 </body>
 </html>
