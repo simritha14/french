@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>French Passé Simple Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            text-align: center;
+            margin: 20px 0;
+        }
+        nav a {
+            margin: 0 15px;
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .section-instruction {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 50%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .correct {
+            background-color: #c8e6c9; /* Light green background */
+            border-color: #2e7d32;    /* Dark green border */
+        }
+        .incorrect {
+            background-color: #ffccbc; /* Light red background */
+            border-color: #d32f2f;    /* Dark red border */
+        }
+        .correct-answer {
+            display: none;
+            color: #2e7d32;
+            font-size: 14px;
+        }
+        .tooltip {
+            display: none;
+            margin-left: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>French Passé Simple Quiz</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+    </nav>
+
+    <div class="quiz-container">
+        <p class="section-instruction">Complete the sentences with the futur simple form of the verbs in brackets.</p>
+
+        <form id="quizForm">
+            <!-- Questions will be dynamically injected here -->
+        </form>
+
+        <p class="section-instruction">Complete the sentences with the futur simple form of the verbs in brackets. Remember – not all verbs follow the regular conjugation rules</p>
+
+        <form id="quizForm1">
+            <!-- Questions will be dynamically injected here -->
+        </form>
+        
+        <p class="section-instruction">Complete the sentences with the futur simple form of the verbs in brackets. Remember – not all verbs follow the regular conjugation rules</p>
+
+        <form id="quizForm2">
+            <!-- Questions will be dynamically injected here -->
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Question pools
+const section1Questions = [
+    { "question": "Demain je (finir) _____ de lire cette bande-dessinée.", "correct": "finirai", "translation": "Tomorrow I will finish reading this comic book." },
+    { "question": "La semaine prochaine il (visiter) _____ le nouveau musée.", "correct": "visitera", "translation": "Next week he will visit the new museum." },
+    { "question": "Tu (prendre) _____ un thé.", "correct": "prendras", "translation": "You will have a tea." },
+    { "question": "Nous (rester) _____ un jour de plus.", "correct": "resterons", "translation": "We will stay one more day." },
+    { "question": "Juliette et Camille (préparer) _____ le repas.", "correct": "prépareront", "translation": "Juliette and Camille will prepare the meal." },
+    { "question": "Est-ce que vous (aller) _____ à la piscine en été?", "correct": "irez", "translation": "Are you going to the pool in summer?" },
+    { "question": "Le week-end prochain ils (courir) _____ un marathon.", "correct": "courront", "translation": "Next weekend they will run a marathon." },
+    { "question": "Mardi prochain nous (pouvoir) _____ nous rencontrer.", "correct": "pourrons", "translation": "Next Tuesday we will be able to meet." },
+    { "question": "Le médecin (employer) _____ une nouvelle infirmière en septembre.", "correct": "employera", "translation": "The doctor will hire a new nurse in September." },
+    { "question": "Demain je me (peser) _____ .", "correct": "pèserai", "translation": "Tomorrow I will weigh myself." },
+    { "question": "Quand est-ce que tu (être) _____ à Paris?", "correct": "seras", "translation": "When will you be in Paris?" },
+    { "question": "La bibliothèque (fermer) _____ pendant les vacances.", "correct": "fermera", "translation": "The library will close during the holidays." },
+    { "question": "Dans un mois ils (partir) _____ à Bordeaux.", "correct": "partiront", "translation": "In a month they will leave for Bordeaux." },
+    { "question": "À mon anniversaire j’(avoir) _____ plein de cadeaux.", "correct": "aurai", "translation": "On my birthday I will have plenty of gifts." },
+    { "question": "La semaine prochaine vous (modeler) _____ une sculpture.", "correct": "modelerez", "translation": "Next week you will sculpt a sculpture." },
+    { "question": "Tu (choisir) _____ un film pour ce soir.", "correct": "choisiras", "translation": "You will choose a movie for tonight." },
+    { "question": "Nous (manger) _____ dans ce restaurant demain.", "correct": "mangerons", "translation": "We will eat in this restaurant tomorrow." },
+    { "question": "Ils (faire) _____ leurs devoirs après le dîner.", "correct": "feront", "translation": "They will do their homework after dinner." },
+    { "question": "Elle (aller) _____ à la fête ce soir.", "correct": "ira", "translation": "She will go to the party tonight." },
+    { "question": "Vous (voyager) _____ en Europe cet été.", "correct": "voyagerez", "translation": "You will travel to Europe this summer." },
+    { "question": "Je (réussir) _____ à mon examen.", "correct": "réussirai", "translation": "I will pass my exam." },
+    { "question": "Ils (devoir) _____ étudier pour l’examen.", "correct": "devront", "translation": "They will have to study for the exam." },
+];
+
+const section2Questions = [
+    { "question": "Demain je (commencer) _____ mon nouveau travail.", "correct": "commencerai", "translation": "Tomorrow I will start my new job." },
+    { "question": "Elle (finir) _____ son livre ce soir.", "correct": "finira", "translation": "She will finish her book tonight." },
+    { "question": "Nous (aller) _____ au cinéma demain.", "correct": "irons", "translation": "We will go to the cinema tomorrow." },
+    { "question": "Ils (prendre) _____ le train à 10 heures.", "correct": "prendront", "translation": "They will take the train at 10 o'clock." },
+    { "question": "Vous (venir) _____ avec nous?", "correct": "viendrez", "translation": "Will you come with us?" },
+    { "question": "Je (répondre) _____ à ta lettre.", "correct": "répondrai", "translation": "I will reply to your letter." },
+    { "question": "Il (aimer) _____ ce film.", "correct": "aimera", "translation": "He will love this movie." },
+    { "question": "Tu (voir) _____ tes amis ce week-end.", "correct": "verras", "translation": "You will see your friends this weekend." },
+    { "question": "Nous (faire) _____ un gâteau pour ta fête.", "correct": "ferons", "translation": "We will make a cake for your party." },
+    { "question": "Demain vous (devoir) _____ travailler tard.", "correct": "devrez", "translation": "Tomorrow you will have to work late." },
+    { "question": "Je (manger) _____ des crêpes pour le petit déjeuner.", "correct": "mangerai", "translation": "I will eat pancakes for breakfast." },
+    { "question": "Ils (étudier) _____ pour l’examen final.", "correct": "étudieront", "translation": "They will study for the final exam." },
+    { "question": "Tu (jouer) _____ au foot avec tes amis.", "correct": "joueras", "translation": "You will play soccer with your friends." },
+    { "question": "Nous (aller) _____ à la plage ce week-end.", "correct": "irons", "translation": "We will go to the beach this weekend." },
+    { "question": "Elle (faire) _____ du shopping demain.", "correct": "fera", "translation": "She will go shopping tomorrow." },
+    { "question": "Vous (travailler) _____ sur ce projet ensemble.", "correct": "travaillerez", "translation": "You will work on this project together." },
+    { "question": "Ils (attendre) _____ le bus à l’arrêt.", "correct": "attendront", "translation": "They will wait for the bus at the stop." },
+    { "question": "Je (choisir) _____ une nouvelle voiture.", "correct": "choisirai", "translation": "I will choose a new car." },
+    { "question": "Tu (réussir) _____ à l'examen de français.", "correct": "réussiras", "translation": "You will pass the French exam." },
+    { "question": "Nous (parler) _____ de nos vacances.", "correct": "parlerons", "translation": "We will talk about our vacation." },
+    { "question": "Ils (se réveiller) _____ tôt demain matin.", "correct": "se réveilleront", "translation": "They will wake up early tomorrow morning." },
+    { "question": "Vous (finir) _____ vos devoirs avant de sortir.", "correct": "finirez", "translation": "You will finish your homework before going out." },
+];
+
+const section3Questions = [
+    { "question": "Demain, je (aller) _____ au marché.", "correct": "irai", "translation": "Tomorrow, I will go to the market." },
+    { "question": "Elle (apporter) _____ des fleurs pour la fête.", "correct": "aportera", "translation": "She will bring flowers for the party." },
+    { "question": "Nous (réserver) _____ une table pour deux.", "correct": "réserverons", "translation": "We will reserve a table for two." },
+    { "question": "Ils (regarder) _____ un nouveau film ce soir.", "correct": "regarderont", "translation": "They will watch a new movie tonight." },
+    { "question": "Je (trouver) _____ un nouvel emploi.", "correct": "trouverai", "translation": "I will find a new job." },
+    { "question": "Tu (se coucher) _____ tôt demain.", "correct": "te coucheras", "translation": "You will go to bed early tomorrow." },
+    { "question": "Nous (rencontrer) _____ nos amis au café.", "correct": "rencontrerons", "translation": "We will meet our friends at the café." },
+    { "question": "Vous (réparer) _____ votre voiture ce week-end.", "correct": "réparerez", "translation": "You will repair your car this weekend." },
+    { "question": "Il (nager) _____ dans la mer cet été.", "correct": "nagera", "translation": "He will swim in the sea this summer." },
+    { "question": "Je (demander) _____ des conseils à mon professeur.", "correct": "demanderai", "translation": "I will ask my teacher for advice." },
+    { "question": "Ils (organiser) _____ une surprise pour son anniversaire.", "correct": "organiseront", "translation": "They will organize a surprise for his birthday." },
+    { "question": "Tu (laver) _____ la voiture demain.", "correct": "laveras", "translation": "You will wash the car tomorrow." },
+    { "question": "Nous (fermer) _____ la fenêtre.", "correct": "fermerons", "translation": "We will close the window." },
+    { "question": "Il (étudier) _____ pour son examen de maths.", "correct": "étudiera", "translation": "He will study for his math exam." },
+    { "question": "Je (faire) _____ un gâteau pour le dessert.", "correct": "ferai", "translation": "I will make a cake for dessert." },
+    { "question": "Tu (aider) _____ ta sœur avec ses devoirs.", "correct": "aideras", "translation": "You will help your sister with her homework." },
+    { "question": "Nous (découvrir) _____ une nouvelle recette.", "correct": "découvrirons", "translation": "We will discover a new recipe." },
+    { "question": "Ils (voyager) _____ à travers la France cet été.", "correct": "voyageront", "translation": "They will travel across France this summer." },
+    { "question": "Elle (finir) _____ ses études l'année prochaine.", "correct": "finira", "translation": "She will finish her studies next year." },
+    { "question": "Je (travailler) _____ sur un projet important.", "correct": "travaillerai", "translation": "I will work on an important project." },
+    { "question": "Vous (partager) _____ vos idées avec le groupe.", "correct": "partagerez", "translation": "You will share your ideas with the group." },
+    { "question": "Ils (venir) _____ à la réunion demain.", "correct": "viendront", "translation": "They will come to the meeting tomorrow." },
+];
+
+        // Function to shuffle and select 5 random questions
+        function getRandomQuestions(arr) {
+            return arr.sort(() => 0.5 - Math.random()).slice(0, 5);
+        }
+
+        // Function to display the questions
+        function displayQuestions() {
+            const quizForm = document.getElementById('quizForm');
+            const quizForm1 = document.getElementById('quizForm1');
+            const quizForm2 = document.getElementById('quizForm2');
+
+
+            quizForm.innerHTML = ''; // Clear the form
+
+            // Get 5 random questions from each section
+            const section1Selected = getRandomQuestions(section1Questions);
+            const section2Selected = getRandomQuestions(section2Questions);
+            const section3Selected = getRandomQuestions(section3Questions);
+
+
+            // Display Section 1 questions
+            section1Selected.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question">
+                        <p>${index + 1}.${q.question}
+                            <span class="tooltip" id="tooltip-${index + 1}" title="${q.translation}">🔍</span>
+                        </p>
+                        <input type="text" id="q${index + 1}" onblur="validateAnswer(${index + 1}, '${q.correct}')">
+                        <span id="correct-answer-${index + 1}" class="correct-answer">Correct answer: ${q.correct}</span>
+                    </div>
+                `;
+                quizForm.innerHTML += questionHTML;
+            });
+
+            // Display Section 2 questions
+            section2Selected.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question">
+                        <p>${index + 6}. ${q.question}
+                            <span class="tooltip" id="tooltip-${index + 6}" title="${q.translation}">🔍</span>
+                        </p>
+                        <input type="text" id="q${index + 6}" onblur="validateAnswer(${index + 6}, '${q.correct}')">
+                        <span id="correct-answer-${index + 6}" class="correct-answer">Correct answer: ${q.correct}</span>
+                    </div>
+                `;
+                quizForm1.innerHTML += questionHTML;
+            });
+            
+            // Display Section 3 questions
+            section3Selected.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question">
+                        <p>${index + 11}. ${q.question}
+                            <span class="tooltip" id="tooltip-${index + 11}" title="${q.translation}">🔍</span>
+                        </p>
+                        <input type="text" id="q${index + 11}" onblur="validateAnswer(${index + 11}, '${q.correct}')">
+                        <span id="correct-answer-${index + 11}" class="correct-answer">Correct answer: ${q.correct}</span>
+                    </div>
+                `;
+                quizForm2.innerHTML += questionHTML;
+            });            
+            
+            
+
+            // Add the "Check Answers" button
+            quizForm2.innerHTML += `
+                <button type="button" onclick="checkAnswers()">Check exercise</button>
+            `;
+        }
+
+        function validateAnswer(questionIndex, correctAnswer) {
+            const userAnswer = document.getElementById('q' + questionIndex).value.trim().toLowerCase();
+            const inputField = document.getElementById('q' + questionIndex);
+
+            // Handle apostrophes and trim spaces from the correct answer
+            const formattedCorrectAnswer = correctAnswer.toLowerCase().replace(/\s+/g, '').replace(/'/g, '');
+
+            // Also format the user's answer similarly
+            const formattedUserAnswer = userAnswer.replace(/\s+/g, '').replace(/'/g, '');
+
+            if (formattedUserAnswer === formattedCorrectAnswer) {
+                inputField.classList.remove('incorrect');
+                inputField.classList.add('correct');
+                document.getElementById(`correct-answer-${questionIndex}`).style.display = 'none'; // Hide correct answer if right
+            } else {
+                inputField.classList.remove('correct');
+                inputField.classList.add('incorrect');
+            }
+        }
+
+        // Function to check all answers (on button click)
+        function checkAnswers() {
+            const resultDiv = document.getElementById('result');
+            const inputs = document.querySelectorAll('input[type="text"]');
+            let correctCount = 0;
+
+inputs.forEach(input => {
+    const questionIndex = input.id.replace('q', '');
+    const correctAnswer = document.getElementById(`correct-answer-${questionIndex}`).innerText.replace('Correct answer: ', '');
+
+    if (input.value.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+        correctCount++;
+    } else {
+        document.getElementById(`correct-answer-${questionIndex}`).style.display = 'block'; // Show correct answer if wrong
+    }
+
+    // Make the tooltip visible after the check
+    const tooltip = document.getElementById(`tooltip-${questionIndex}`);
+    if (tooltip) {
+        tooltip.style.display = 'inline';
+    }
+});
+
+
+            resultDiv.innerHTML = `You got ${correctCount} out of ${inputs.length} correct!`;
+        }
+
+        // Load questions when the page loads
+        window.onload = displayQuestions;
+    </script>
+
+</body>
+</html>
