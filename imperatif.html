@@ -100,13 +100,12 @@
             font-size: 14px;
         }
         .tooltip {
-            display: none;
+            display: none;  /* Tooltip hidden by default */
             margin-left: 5px;
-            cursor: pointer;
             font-size: 14px;
             color: #4CAF50;
         }
-    </style>
+   </style>
 </head>
 <body>
 
@@ -119,102 +118,140 @@
     </nav>
 
     <div class="quiz-container">
-        <p class="section-instruction">Complete the sentences with the futur simple form of the verbs in brackets.</p>
+        <p class="section-instruction">Complete the gaps with the imperative for the 2nd person singular (tu).</p>
 
-        <form id="quizForm">
-            <!-- Questions will be dynamically injected here -->
-        </form>
+        <form id="quizForm"></form>
+        <p class="section-instruction">Complete the gaps with the imperative for the 1st person plural (nous).</p>
 
-        <p class="section-instruction">Complete the sentences with the futur simple form of the verbs in brackets. Remember – not all verbs follow the regular conjugation rules</p>
+        <form id="quizForm1"></form>
+        <p class="section-instruction">Complete the gaps with the imperative for the 2nd person plural (vous)</p>
 
-        <form id="quizForm1">
-            <!-- Questions will be dynamically injected here -->
-        </form>
+        <form id="quizForm2"></form>
         
-        <p class="section-instruction">Complete the sentences with the futur simple form of the verbs in brackets. Remember – not all verbs follow the regular conjugation rules</p>
-
-        <form id="quizForm2">
-            <!-- Questions will be dynamically injected here -->
-        </form>
-
         <div id="result"></div>
     </div>
 
     <script>
-        // Question pools
+        // Question pools (existing question arrays)
 const section1Questions = [
-    { "question": "Demain je (finir) _____ de lire cette bande-dessinée.", "correct": "finirai", "translation": "Tomorrow I will finish reading this comic book." },
-    { "question": "La semaine prochaine il (visiter) _____ le nouveau musée.", "correct": "visitera", "translation": "Next week he will visit the new museum." },
-    { "question": "Tu (prendre) _____ un thé.", "correct": "prendras", "translation": "You will have a tea." },
-    { "question": "Nous (rester) _____ un jour de plus.", "correct": "resterons", "translation": "We will stay one more day." },
-    { "question": "Juliette et Camille (préparer) _____ le repas.", "correct": "prépareront", "translation": "Juliette and Camille will prepare the meal." },
-    { "question": "Est-ce que vous (aller) _____ à la piscine en été?", "correct": "irez", "translation": "Are you going to the pool in summer?" },
-    { "question": "Le week-end prochain ils (courir) _____ un marathon.", "correct": "courront", "translation": "Next weekend they will run a marathon." },
-    { "question": "Mardi prochain nous (pouvoir) _____ nous rencontrer.", "correct": "pourrons", "translation": "Next Tuesday we will be able to meet." },
-    { "question": "Le médecin (employer) _____ une nouvelle infirmière en septembre.", "correct": "employera", "translation": "The doctor will hire a new nurse in September." },
-    { "question": "Demain je me (peser) _____ .", "correct": "pèserai", "translation": "Tomorrow I will weigh myself." },
-    { "question": "Quand est-ce que tu (être) _____ à Paris?", "correct": "seras", "translation": "When will you be in Paris?" },
-    { "question": "La bibliothèque (fermer) _____ pendant les vacances.", "correct": "fermera", "translation": "The library will close during the holidays." },
-    { "question": "Dans un mois ils (partir) _____ à Bordeaux.", "correct": "partiront", "translation": "In a month they will leave for Bordeaux." },
-    { "question": "À mon anniversaire j’(avoir) _____ plein de cadeaux.", "correct": "aurai", "translation": "On my birthday I will have plenty of gifts." },
-    { "question": "La semaine prochaine vous (modeler) _____ une sculpture.", "correct": "modelerez", "translation": "Next week you will sculpt a sculpture." },
-    { "question": "Tu (choisir) _____ un film pour ce soir.", "correct": "choisiras", "translation": "You will choose a movie for tonight." },
-    { "question": "Nous (manger) _____ dans ce restaurant demain.", "correct": "mangerons", "translation": "We will eat in this restaurant tomorrow." },
-    { "question": "Ils (faire) _____ leurs devoirs après le dîner.", "correct": "feront", "translation": "They will do their homework after dinner." },
-    { "question": "Elle (aller) _____ à la fête ce soir.", "correct": "ira", "translation": "She will go to the party tonight." },
-    { "question": "Vous (voyager) _____ en Europe cet été.", "correct": "voyagerez", "translation": "You will travel to Europe this summer." },
-    { "question": "Je (réussir) _____ à mon examen.", "correct": "réussirai", "translation": "I will pass my exam." },
-    { "question": "Ils (devoir) _____ étudier pour l’examen.", "correct": "devront", "translation": "They will have to study for the exam." },
+    { "question": "(parler/avec elle) __________", "correct": "Parle avec elle", "translation": "Speak with her." },
+    { "question": "(finir/tes devoirs) __________", "correct": "Finis tes devoirs", "translation": "Finish your homework." },
+    { "question": "(écouter/moi) __________", "correct": "Écoute-moi", "translation": "Listen to me." },
+    { "question": "(manger/ton repas) __________", "correct": "Mange ton repas", "translation": "Eat your meal." },
+    { "question": "(prendre/un crayon) __________", "correct": "Prends un crayon", "translation": "Take a pencil." },
+    { "question": "(écrire/cette lettre) __________", "correct": "Écris cette lettre", "translation": "Write this letter." },
+    { "question": "(venir/chez moi) __________", "correct": "Viens chez moi", "translation": "Come to my place." },
+    { "question": "(choisir/un livre) __________", "correct": "Choisis un livre", "translation": "Choose a book." },
+    { "question": "(ouvrir/la porte) __________", "correct": "Ouvre la porte", "translation": "Open the door." },
+    { "question": "(regarder/le film) __________", "correct": "Regarde le film", "translation": "Watch the movie." },
+    { "question": "(répondre/à la question) __________", "correct": "Réponds à la question", "translation": "Answer the question." },
+    { "question": "(fermer/la fenêtre) __________", "correct": "Ferme la fenêtre", "translation": "Close the window." },
+    { "question": "(dire/la vérité) __________", "correct": "Dis la vérité", "translation": "Tell the truth." },
+    { "question": "(aller/à l'école) __________", "correct": "Va à l'école", "translation": "Go to school." },
+    { "question": "(courir/plus vite) __________", "correct": "Cours plus vite", "translation": "Run faster." },
+    { "question": "(boire/ce verre d'eau) __________", "correct": "Bois ce verre d'eau", "translation": "Drink this glass of water." },
+    { "question": "(acheter/cet ordinateur) __________", "correct": "Achète cet ordinateur", "translation": "Buy this computer." },
+    { "question": "(donner/moi le livre) __________", "correct": "Donne-moi le livre", "translation": "Give me the book." },
+    { "question": "(porter/ton manteau) __________", "correct": "Porte ton manteau", "translation": "Wear your coat." },
+    { "question": "(jouer/avec ton frère) __________", "correct": "Joue avec ton frère", "translation": "Play with your brother." },
+    { "question": "(lire/ce chapitre) __________", "correct": "Lis ce chapitre", "translation": "Read this chapter." },
+    { "question": "(ranger/ta chambre) __________", "correct": "Range ta chambre", "translation": "Tidy up your room." },
+    { "question": "(attendre/moi) __________", "correct": "Attends-moi", "translation": "Wait for me." },
+    { "question": "(parler/plus fort) __________", "correct": "Parle plus fort", "translation": "Speak louder." },
+    { "question": "(lever/ta main) __________", "correct": "Lève ta main", "translation": "Raise your hand." },
+    { "question": "(travailler/plus dur) __________", "correct": "Travaille plus dur", "translation": "Work harder." },
+    { "question": "(se brosser/les dents) __________", "correct": "Brosse-toi les dents", "translation": "Brush your teeth." },
+    { "question": "(s'amuser/au parc) __________", "correct": "Amuse-toi au parc", "translation": "Have fun at the park." },
+    { "question": "(s'asseoir/ici) __________", "correct": "Assieds-toi ici", "translation": "Sit here." },
+    { "question": "(ne pas pleurer) __________", "correct": "Ne pleure pas", "translation": "Don't cry." },
+    { "question": "(ne pas toucher/ça) __________", "correct": "Ne touche pas ça", "translation": "Don't touch that." },
+    { "question": "(ne pas oublier/ton parapluie) __________", "correct": "N'oublie pas ton parapluie", "translation": "Don't forget your umbrella." },
+    { "question": "(ne pas courir/ici) __________", "correct": "Ne cours pas ici", "translation": "Don't run here." },
+    { "question": "(ne pas parler/pendant le film) __________", "correct": "Ne parle pas pendant le film", "translation": "Don't talk during the movie." },
+    { "question": "(ne pas faire/de bruit) __________", "correct": "Ne fais pas de bruit", "translation": "Don't make noise." },
+    { "question": "(se lever/tôt demain) __________", "correct": "Lève-toi tôt demain", "translation": "Wake up early tomorrow." },
+    { "question": "(se reposer/après le travail) __________", "correct": "Repose-toi après le travail", "translation": "Rest after work." },
+    { "question": "(aller/à la boulangerie) __________", "correct": "Va à la boulangerie", "translation": "Go to the bakery." },
+    { "question": "(prendre/un taxi) __________", "correct": "Prends un taxi", "translation": "Take a taxi." },
 ];
-
 const section2Questions = [
-    { "question": "Demain je (commencer) _____ mon nouveau travail.", "correct": "commencerai", "translation": "Tomorrow I will start my new job." },
-    { "question": "Elle (finir) _____ son livre ce soir.", "correct": "finira", "translation": "She will finish her book tonight." },
-    { "question": "Nous (aller) _____ au cinéma demain.", "correct": "irons", "translation": "We will go to the cinema tomorrow." },
-    { "question": "Ils (prendre) _____ le train à 10 heures.", "correct": "prendront", "translation": "They will take the train at 10 o'clock." },
-    { "question": "Vous (venir) _____ avec nous?", "correct": "viendrez", "translation": "Will you come with us?" },
-    { "question": "Je (répondre) _____ à ta lettre.", "correct": "répondrai", "translation": "I will reply to your letter." },
-    { "question": "Il (aimer) _____ ce film.", "correct": "aimera", "translation": "He will love this movie." },
-    { "question": "Tu (voir) _____ tes amis ce week-end.", "correct": "verras", "translation": "You will see your friends this weekend." },
-    { "question": "Nous (faire) _____ un gâteau pour ta fête.", "correct": "ferons", "translation": "We will make a cake for your party." },
-    { "question": "Demain vous (devoir) _____ travailler tard.", "correct": "devrez", "translation": "Tomorrow you will have to work late." },
-    { "question": "Je (manger) _____ des crêpes pour le petit déjeuner.", "correct": "mangerai", "translation": "I will eat pancakes for breakfast." },
-    { "question": "Ils (étudier) _____ pour l’examen final.", "correct": "étudieront", "translation": "They will study for the final exam." },
-    { "question": "Tu (jouer) _____ au foot avec tes amis.", "correct": "joueras", "translation": "You will play soccer with your friends." },
-    { "question": "Nous (aller) _____ à la plage ce week-end.", "correct": "irons", "translation": "We will go to the beach this weekend." },
-    { "question": "Elle (faire) _____ du shopping demain.", "correct": "fera", "translation": "She will go shopping tomorrow." },
-    { "question": "Vous (travailler) _____ sur ce projet ensemble.", "correct": "travaillerez", "translation": "You will work on this project together." },
-    { "question": "Ils (attendre) _____ le bus à l’arrêt.", "correct": "attendront", "translation": "They will wait for the bus at the stop." },
-    { "question": "Je (choisir) _____ une nouvelle voiture.", "correct": "choisirai", "translation": "I will choose a new car." },
-    { "question": "Tu (réussir) _____ à l'examen de français.", "correct": "réussiras", "translation": "You will pass the French exam." },
-    { "question": "Nous (parler) _____ de nos vacances.", "correct": "parlerons", "translation": "We will talk about our vacation." },
-    { "question": "Ils (se réveiller) _____ tôt demain matin.", "correct": "se réveilleront", "translation": "They will wake up early tomorrow morning." },
-    { "question": "Vous (finir) _____ vos devoirs avant de sortir.", "correct": "finirez", "translation": "You will finish your homework before going out." },
+    { "question": "(payer/l'addition) __________", "correct": "Payons l'addition", "translation": "Let's pay the bill." },
+    { "question": "(finir/nos devoirs) __________", "correct": "Finissons nos devoirs", "translation": "Let's finish our homework." },
+    { "question": "(manger/ensemble) __________", "correct": "Mangeons ensemble", "translation": "Let's eat together." },
+    { "question": "(parler/avec eux) __________", "correct": "Parlons avec eux", "translation": "Let's speak with them." },
+    { "question": "(choisir/un film) __________", "correct": "Choisissons un film", "translation": "Let's choose a movie." },
+    { "question": "(aller/au parc) __________", "correct": "Allons au parc", "translation": "Let's go to the park." },
+    { "question": "(prendre/un café) __________", "correct": "Prenons un café", "translation": "Let's have a coffee." },
+    { "question": "(regarder/ce documentaire) __________", "correct": "Regardons ce documentaire", "translation": "Let's watch this documentary." },
+    { "question": "(ouvrir/les fenêtres) __________", "correct": "Ouvrons les fenêtres", "translation": "Let's open the windows." },
+    { "question": "(écrire/cette lettre) __________", "correct": "Écrivons cette lettre", "translation": "Let's write this letter." },
+    { "question": "(répondre/à la question) __________", "correct": "Répondons à la question", "translation": "Let's answer the question." },
+    { "question": "(réserver/une table) __________", "correct": "Réservons une table", "translation": "Let's reserve a table." },
+    { "question": "(prendre/le bus) __________", "correct": "Prenons le bus", "translation": "Let's take the bus." },
+    { "question": "(entrer/dans la maison) __________", "correct": "Entrons dans la maison", "translation": "Let's enter the house." },
+    { "question": "(lire/cet article) __________", "correct": "Lisons cet article", "translation": "Let's read this article." },
+    { "question": "(se lever/tôt demain) __________", "correct": "Levons-nous tôt demain", "translation": "Let's get up early tomorrow." },
+    { "question": "(nous amuser/au parc) __________", "correct": "Amusons-nous au parc", "translation": "Let's have fun at the park." },
+    { "question": "(commencer/le travail) __________", "correct": "Commençons le travail", "translation": "Let's start the work." },
+    { "question": "(faire/une pause) __________", "correct": "Faisons une pause", "translation": "Let's take a break." },
+    { "question": "(fermer/la porte) __________", "correct": "Fermons la porte", "translation": "Let's close the door." },
+    { "question": "(boire/un verre d'eau) __________", "correct": "Buvons un verre d'eau", "translation": "Let's drink a glass of water." },
+    { "question": "(jouer/au tennis) __________", "correct": "Jouons au tennis", "translation": "Let's play tennis." },
+    { "question": "(acheter/ce livre) __________", "correct": "Achetons ce livre", "translation": "Let's buy this book." },
+    { "question": "(réfléchir/à cette idée) __________", "correct": "Réfléchissons à cette idée", "translation": "Let's think about this idea." },
+    { "question": "(se détendre/ce soir) __________", "correct": "Détendons-nous ce soir", "translation": "Let's relax tonight." },
+    { "question": "(attendre/le bus) __________", "correct": "Attendons le bus", "translation": "Let's wait for the bus." },
+    { "question": "(ne pas courir) __________", "correct": "Ne courons pas", "translation": "Let's not run." },
+    { "question": "(ne pas oublier/les clés) __________", "correct": "N'oublions pas les clés", "translation": "Let's not forget the keys." },
+    { "question": "(ne pas faire/de bruit) __________", "correct": "Ne faisons pas de bruit", "translation": "Let's not make noise." },
+    { "question": "(prendre/un taxi) __________", "correct": "Prenons un taxi", "translation": "Let's take a taxi." },
+    { "question": "(aller/à la plage) __________", "correct": "Allons à la plage", "translation": "Let's go to the beach." },
+    { "question": "(discuter/de ce projet) __________", "correct": "Discutons de ce projet", "translation": "Let's discuss this project." },
+    { "question": "(faire/les courses) __________", "correct": "Faisons les courses", "translation": "Let's do the grocery shopping." },
+    { "question": "(partir/maintenant) __________", "correct": "Partons maintenant", "translation": "Let's leave now." },
+    { "question": "(s'asseoir/ici) __________", "correct": "Asseyons-nous ici", "translation": "Let's sit here." },
+    { "question": "(ne pas se disputer) __________", "correct": "Ne nous disputons pas", "translation": "Let's not argue." },
+    { "question": "(se laver/les mains) __________", "correct": "Lavageons-nous les mains", "translation": "Let's wash our hands." },
+    { "question": "(travailler/ensemble) __________", "correct": "Travaillons ensemble", "translation": "Let's work together." },
 ];
-
 const section3Questions = [
-    { "question": "Demain, je (aller) _____ au marché.", "correct": "irai", "translation": "Tomorrow, I will go to the market." },
-    { "question": "Elle (apporter) _____ des fleurs pour la fête.", "correct": "aportera", "translation": "She will bring flowers for the party." },
-    { "question": "Nous (réserver) _____ une table pour deux.", "correct": "réserverons", "translation": "We will reserve a table for two." },
-    { "question": "Ils (regarder) _____ un nouveau film ce soir.", "correct": "regarderont", "translation": "They will watch a new movie tonight." },
-    { "question": "Je (trouver) _____ un nouvel emploi.", "correct": "trouverai", "translation": "I will find a new job." },
-    { "question": "Tu (se coucher) _____ tôt demain.", "correct": "te coucheras", "translation": "You will go to bed early tomorrow." },
-    { "question": "Nous (rencontrer) _____ nos amis au café.", "correct": "rencontrerons", "translation": "We will meet our friends at the café." },
-    { "question": "Vous (réparer) _____ votre voiture ce week-end.", "correct": "réparerez", "translation": "You will repair your car this weekend." },
-    { "question": "Il (nager) _____ dans la mer cet été.", "correct": "nagera", "translation": "He will swim in the sea this summer." },
-    { "question": "Je (demander) _____ des conseils à mon professeur.", "correct": "demanderai", "translation": "I will ask my teacher for advice." },
-    { "question": "Ils (organiser) _____ une surprise pour son anniversaire.", "correct": "organiseront", "translation": "They will organize a surprise for his birthday." },
-    { "question": "Tu (laver) _____ la voiture demain.", "correct": "laveras", "translation": "You will wash the car tomorrow." },
-    { "question": "Nous (fermer) _____ la fenêtre.", "correct": "fermerons", "translation": "We will close the window." },
-    { "question": "Il (étudier) _____ pour son examen de maths.", "correct": "étudiera", "translation": "He will study for his math exam." },
-    { "question": "Je (faire) _____ un gâteau pour le dessert.", "correct": "ferai", "translation": "I will make a cake for dessert." },
-    { "question": "Tu (aider) _____ ta sœur avec ses devoirs.", "correct": "aideras", "translation": "You will help your sister with her homework." },
-    { "question": "Nous (découvrir) _____ une nouvelle recette.", "correct": "découvrirons", "translation": "We will discover a new recipe." },
-    { "question": "Ils (voyager) _____ à travers la France cet été.", "correct": "voyageront", "translation": "They will travel across France this summer." },
-    { "question": "Elle (finir) _____ ses études l'année prochaine.", "correct": "finira", "translation": "She will finish her studies next year." },
-    { "question": "Je (travailler) _____ sur un projet important.", "correct": "travaillerai", "translation": "I will work on an important project." },
-    { "question": "Vous (partager) _____ vos idées avec le groupe.", "correct": "partagerez", "translation": "You will share your ideas with the group." },
-    { "question": "Ils (venir) _____ à la réunion demain.", "correct": "viendront", "translation": "They will come to the meeting tomorrow." },
+    { "question": "(demander/à votre professeur) __________", "correct": "Demandez à votre professeur", "translation": "Ask your teacher." },
+    { "question": "(finir/votre travail) __________", "correct": "Finissez votre travail", "translation": "Finish your work." },
+    { "question": "(écouter/la musique) __________", "correct": "Écoutez la musique", "translation": "Listen to the music." },
+    { "question": "(manger/vos légumes) __________", "correct": "Mangez vos légumes", "translation": "Eat your vegetables." },
+    { "question": "(parler/avec moi) __________", "correct": "Parlez avec moi", "translation": "Speak with me." },
+    { "question": "(ouvrir/les livres) __________", "correct": "Ouvrez les livres", "translation": "Open the books." },
+    { "question": "(écrire/une lettre) __________", "correct": "Écrivez une lettre", "translation": "Write a letter." },
+    { "question": "(répondre/aux questions) __________", "correct": "Répondez aux questions", "translation": "Answer the questions." },
+    { "question": "(regarder/le tableau) __________", "correct": "Regardez le tableau", "translation": "Look at the board." },
+    { "question": "(prendre/une photo) __________", "correct": "Prenez une photo", "translation": "Take a picture." },
+    { "question": "(choisir/un livre) __________", "correct": "Choisissez un livre", "translation": "Choose a book." },
+    { "question": "(fermer/la fenêtre) __________", "correct": "Fermez la fenêtre", "translation": "Close the window." },
+    { "question": "(aller/à la maison) __________", "correct": "Allez à la maison", "translation": "Go home." },
+    { "question": "(boire/votre café) __________", "correct": "Buvez votre café", "translation": "Drink your coffee." },
+    { "question": "(lire/ce document) __________", "correct": "Lisez ce document", "translation": "Read this document." },
+    { "question": "(donner/les clés) __________", "correct": "Donnez les clés", "translation": "Give the keys." },
+    { "question": "(faire/un effort) __________", "correct": "Faites un effort", "translation": "Make an effort." },
+    { "question": "(venir/chez moi) __________", "correct": "Venez chez moi", "translation": "Come to my house." },
+    { "question": "(prendre/votre manteau) __________", "correct": "Prenez votre manteau", "translation": "Take your coat." },
+    { "question": "(attendre/votre tour) __________", "correct": "Attendez votre tour", "translation": "Wait for your turn." },
+    { "question": "(dire/la vérité) __________", "correct": "Dites la vérité", "translation": "Tell the truth." },
+    { "question": "(s'asseoir/ici) __________", "correct": "Asseyez-vous ici", "translation": "Sit here." },
+    { "question": "(jouer/avec votre frère) __________", "correct": "Jouez avec votre frère", "translation": "Play with your brother." },
+    { "question": "(ne pas toucher/à ça) __________", "correct": "Ne touchez pas à ça", "translation": "Don't touch that." },
+    { "question": "(ne pas parler/pendant la réunion) __________", "correct": "Ne parlez pas pendant la réunion", "translation": "Don't talk during the meeting." },
+    { "question": "(fermer/la porte) __________", "correct": "Fermez la porte", "translation": "Close the door." },
+    { "question": "(se dépêcher) __________", "correct": "Dépêchez-vous", "translation": "Hurry up." },
+    { "question": "(se reposer/après le travail) __________", "correct": "Reposez-vous après le travail", "translation": "Rest after work." },
+    { "question": "(ne pas oublier/ce document) __________", "correct": "N'oubliez pas ce document", "translation": "Don't forget this document." },
+    { "question": "(prendre/le bus) __________", "correct": "Prenez le bus", "translation": "Take the bus." },
+    { "question": "(s'habiller/rapidement) __________", "correct": "Habillez-vous rapidement", "translation": "Dress quickly." },
+    { "question": "(se lever/maintenant) __________", "correct": "Levez-vous maintenant", "translation": "Get up now." },
+    { "question": "(ne pas faire/de bruit) __________", "correct": "Ne faites pas de bruit", "translation": "Don't make noise." },
+    { "question": "(s'amuser/à la fête) __________", "correct": "Amusez-vous à la fête", "translation": "Have fun at the party." },
+    { "question": "(travailler/ensemble) __________", "correct": "Travaillez ensemble", "translation": "Work together." },
+    { "question": "(ranger/votre chambre) __________", "correct": "Rangez votre chambre", "translation": "Tidy up your room." },
+    { "question": "(partir/immédiatement) __________", "correct": "Partez immédiatement", "translation": "Leave immediately." },
 ];
 
         // Function to shuffle and select 5 random questions
@@ -227,8 +264,7 @@ const section3Questions = [
             const quizForm = document.getElementById('quizForm');
             const quizForm1 = document.getElementById('quizForm1');
             const quizForm2 = document.getElementById('quizForm2');
-
-
+            
             quizForm.innerHTML = ''; // Clear the form
 
             // Get 5 random questions from each section
@@ -236,13 +272,13 @@ const section3Questions = [
             const section2Selected = getRandomQuestions(section2Questions);
             const section3Selected = getRandomQuestions(section3Questions);
 
-
             // Display Section 1 questions
             section1Selected.forEach((q, index) => {
                 const questionHTML = `
                     <div class="question">
-                        <p>${index + 1}.${q.question}
-                            <span class="tooltip" id="tooltip-${index + 1}" title="${q.translation}">🔍</span>
+                        <p>${index + 1}. ${q.question}
+                            <span class="tooltip" id="tooltip-${index + 1}">${q.translation}</span>
+                            <span class="tooltip-icon" id="icon-${index + 1}" onclick="toggleTooltip(${index + 1})">🔍</span>
                         </p>
                         <input type="text" id="q${index + 1}" onblur="validateAnswer(${index + 1}, '${q.correct}')">
                         <span id="correct-answer-${index + 1}" class="correct-answer">Correct answer: ${q.correct}</span>
@@ -256,7 +292,8 @@ const section3Questions = [
                 const questionHTML = `
                     <div class="question">
                         <p>${index + 6}. ${q.question}
-                            <span class="tooltip" id="tooltip-${index + 6}" title="${q.translation}">🔍</span>
+                            <span class="tooltip" id="tooltip-${index + 6}">${q.translation}</span>
+                            <span class="tooltip-icon" id="icon-${index + 6}" onclick="toggleTooltip(${index + 6})">🔍</span>
                         </p>
                         <input type="text" id="q${index + 6}" onblur="validateAnswer(${index + 6}, '${q.correct}')">
                         <span id="correct-answer-${index + 6}" class="correct-answer">Correct answer: ${q.correct}</span>
@@ -264,27 +301,36 @@ const section3Questions = [
                 `;
                 quizForm1.innerHTML += questionHTML;
             });
-            
+
             // Display Section 3 questions
             section3Selected.forEach((q, index) => {
                 const questionHTML = `
                     <div class="question">
                         <p>${index + 11}. ${q.question}
-                            <span class="tooltip" id="tooltip-${index + 11}" title="${q.translation}">🔍</span>
+                            <span class="tooltip" id="tooltip-${index + 11}">${q.translation}</span>
+                            <span class="tooltip-icon" id="icon-${index + 11}" onclick="toggleTooltip(${index + 11})">🔍</span>
                         </p>
                         <input type="text" id="q${index + 11}" onblur="validateAnswer(${index + 11}, '${q.correct}')">
                         <span id="correct-answer-${index + 11}" class="correct-answer">Correct answer: ${q.correct}</span>
                     </div>
                 `;
                 quizForm2.innerHTML += questionHTML;
-            });            
-            
-            
+            });
 
             // Add the "Check Answers" button
             quizForm2.innerHTML += `
                 <button type="button" onclick="checkAnswers()">Check exercise</button>
             `;
+        }
+
+        // Toggle tooltip visibility when clicking the icon
+        function toggleTooltip(index) {
+            const tooltip = document.getElementById(`tooltip-${index}`);
+            if (tooltip.style.display === 'none' || tooltip.style.display === '') {
+                tooltip.style.display = 'inline';  // Show translation
+            } else {
+                tooltip.style.display = 'none';  // Hide translation
+            }
         }
 
         function validateAnswer(questionIndex, correctAnswer) {
@@ -313,23 +359,19 @@ const section3Questions = [
             const inputs = document.querySelectorAll('input[type="text"]');
             let correctCount = 0;
 
-inputs.forEach(input => {
-    const questionIndex = input.id.replace('q', '');
-    const correctAnswer = document.getElementById(`correct-answer-${questionIndex}`).innerText.replace('Correct answer: ', '');
+            inputs.forEach(input => {
+                const questionIndex = input.id.replace('q', '');
+                const correctAnswer = document.getElementById(`correct-answer-${questionIndex}`).innerText.replace('Correct answer: ', '');
 
-    if (input.value.trim().toLowerCase() === correctAnswer.toLowerCase()) {
-        correctCount++;
-    } else {
-        document.getElementById(`correct-answer-${questionIndex}`).style.display = 'block'; // Show correct answer if wrong
-    }
+                if (input.value.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+                    correctCount++;
+                } else {
+                    document.getElementById(`correct-answer-${questionIndex}`).style.display = 'block'; // Show correct answer if wrong
+                }
 
-    // Make the tooltip visible after the check
-    const tooltip = document.getElementById(`tooltip-${questionIndex}`);
-    if (tooltip) {
-        tooltip.style.display = 'inline';
-    }
-});
-
+                // Make the tooltip visible after the check
+                document.getElementById(`tooltip-${questionIndex}`).style.display = 'inline';
+            });
 
             resultDiv.innerHTML = `You got ${correctCount} out of ${inputs.length} correct!`;
         }
@@ -337,6 +379,5 @@ inputs.forEach(input => {
         // Load questions when the page loads
         window.onload = displayQuestions;
     </script>
-
 </body>
 </html>
