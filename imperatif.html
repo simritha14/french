@@ -354,24 +354,29 @@ const section3Questions = [
         }
 
         // Function to check all answers (on button click)
-        function checkAnswers() {
-            const resultDiv = document.getElementById('result');
-            const inputs = document.querySelectorAll('input[type="text"]');
-            let correctCount = 0;
+        
+function checkAnswers() {
+    const resultDiv = document.getElementById('result');
+    const inputs = document.querySelectorAll('input[type="text"]');
+    let correctCount = 0;
 
-            inputs.forEach(input => {
-                const questionIndex = input.id.replace('q', '');
-                const correctAnswer = document.getElementById(`correct-answer-${questionIndex}`).innerText.replace('Correct answer: ', '');
+    inputs.forEach(input => {
+        const questionIndex = input.id.replace('q', '');
+        const correctAnswer = document.getElementById(`correct-answer-${questionIndex}`).innerText.replace('Correct answer: ', '');
 
-                if (input.value.trim().toLowerCase() === correctAnswer.toLowerCase()) {
-                    correctCount++;
-                } else {
-                    document.getElementById(`correct-answer-${questionIndex}`).style.display = 'block'; // Show correct answer if wrong
-                }
+        if (input.value.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+            correctCount++;
+        } else {
+            document.getElementById(`correct-answer-${questionIndex}`).style.display = 'block'; // Show correct answer if wrong
+        }
 
-                // Make the tooltip visible after the check
-                document.getElementById(`tooltip-${questionIndex}`).style.display = 'inline';
-            });
+        // Make the tooltip visible after the check
+        document.getElementById(`tooltip-${questionIndex}`).style.display = 'inline';
+    });
+
+    // Update result display (optional)
+    resultDiv.innerText = `You got ${correctCount} out of ${inputs.length} correct!`;
+}
 
             resultDiv.innerHTML = `You got ${correctCount} out of ${inputs.length} correct!`;
         }
