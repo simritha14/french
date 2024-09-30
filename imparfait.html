@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>French L’imparfait Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            text-align: center;
+            margin: 20px 0;
+        }
+        nav a {
+            margin: 0 15px;
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .section-instruction {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 50%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .correct {
+            background-color: #c8e6c9; /* Light green background */
+            border-color: #2e7d32;    /* Dark green border */
+        }
+        .incorrect {
+            background-color: #ffccbc; /* Light red background */
+            border-color: #d32f2f;    /* Dark red border */
+        }
+        .correct-answer {
+            display: none;
+            color: #2e7d32;
+            font-size: 14px;
+        }
+        .tooltip {
+            display: none;
+            /*margin-left: 5px;*/
+            background-color: white;
+            cursor: pointer;
+            font-size: 14px;
+            color: #4CAF50;
+        }
+        .translation{
+        color: blue;
+        font-size: 12px;
+
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>French L’imparfait Quiz</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+    </nav>
+
+    <div class="quiz-container">
+        <p class="section-instruction">Complete the sentences with the correct imparfait form of the verbs in brackets.</p>
+
+        <form id="quizForm">
+            <!-- Questions will be dynamically injected here -->
+        </form>
+
+        <p class="section-instruction">Section 2:Complete the sentences with the correct imparfait form of the verbs in brackets. Remember – some verbs dn’t follow the typical conjugation rules..</p>
+
+        <form id="quizForm1">
+            <!-- Questions will be dynamically injected here -->
+        </form>
+        
+        <p class="section-instruction">Section 3: Complete the sentences with the correct imparfait form of the verbs in brackets. Remember – some verbs don’t follow the typical conjugation rules.</p>
+
+        <form id="quizForm2">
+            <!-- Questions will be dynamically injected here -->
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Question pools
+const section1Questions = [
+
+    { "question": "En 1994, j’(habiter) __________ à Toulouse.", "correct": "habitais", "translation": "In 1994, I was living in Toulouse." },
+    { "question": "Nous (aller) __________ souvent au cinéma.", "correct": "allions", "translation": "We often went to the movies." },
+    { "question": "Quand j'étais petit, je (jouer) __________ au foot tous les dimanches.", "correct": "jouais", "translation": "When I was little, I used to play soccer every Sunday." },
+    { "question": "Ils (manger) __________ du pain tous les jours.", "correct": "mangeaient", "translation": "They used to eat bread every day." },
+    { "question": "Elle (être) __________ toujours en retard.", "correct": "était", "translation": "She was always late." },
+    { "question": "Vous (faire) __________ vos devoirs le soir.", "correct": "faisiez", "translation": "You used to do your homework in the evening." },
+    { "question": "Nous (prendre) __________ le bus chaque matin.", "correct": "prenions", "translation": "We used to take the bus every morning." },
+    { "question": "Tu (lire) __________ des livres avant de dormir.", "correct": "lisais", "translation": "You used to read books before sleeping." },
+    { "question": "Les enfants (dormir) __________ tôt tous les soirs.", "correct": "dormaient", "translation": "The children used to sleep early every night." },
+    { "question": "Je (travailler) __________ dans un café pendant l'été.", "correct": "travaillais", "translation": "I used to work in a café during the summer." },
+    { "question": "Il (pleuvoir) __________ souvent en avril.", "correct": "pleuvait", "translation": "It used to rain often in April." },
+    { "question": "Vous (venir) __________ ici chaque année.", "correct": "veniez", "translation": "You used to come here every year." },
+    { "question": "Elle (écrire) __________ des lettres à ses amis.", "correct": "écrivait", "translation": "She used to write letters to her friends." },
+    { "question": "Nous (attendre) __________ le train pendant des heures.", "correct": "attendions", "translation": "We used to wait for the train for hours." },
+    { "question": "Ils (parler) __________ français à la maison.", "correct": "parlaient", "translation": "They used to speak French at home." },
+    { "question": "Je (avoir) __________ un chien quand j’étais petit.", "correct": "avais", "translation": "I used to have a dog when I was little." },
+    { "question": "Tu (boire) __________ du lait chaque matin.", "correct": "buvais", "translation": "You used to drink milk every morning." },
+    { "question": "Les enfants (regarder) __________ la télé avant de se coucher.", "correct": "regardaient", "translation": "The children used to watch TV before going to bed." },
+    { "question": "Il (savoir) __________ jouer du piano.", "correct": "savait", "translation": "He knew how to play the piano." },
+    { "question": "Vous (venir) __________ me voir tous les week-ends.", "correct": "veniez", "translation": "You used to come to see me every weekend." },
+    { "question": "Nous (rentrer) __________ à la maison après l'école.", "correct": "rentrions", "translation": "We used to come home after school." },
+    { "question": "Elle (parler) __________ souvent de ses voyages.", "correct": "parlait", "translation": "She used to often talk about her travels." },
+    { "question": "Je (regarder) __________ les étoiles la nuit.", "correct": "regardais", "translation": "I used to watch the stars at night." },
+    { "question": "Ils (vivre) __________ à Paris à l'époque.", "correct": "vivaient", "translation": "They used to live in Paris at that time." },
+    { "question": "Tu (vouloir) __________ devenir médecin.", "correct": "voulais", "translation": "You wanted to become a doctor." },
+    { "question": "Nous (chanter) __________ toujours ensemble.", "correct": "chantions", "translation": "We used to always sing together." },
+    { "question": "Elle (comprendre) __________ tout ce que je disais.", "correct": "comprenait", "translation": "She understood everything I said." },
+    { "question": "Je (partir) __________ en vacances chaque été.", "correct": "partais", "translation": "I used to go on vacation every summer." },
+    { "question": "Ils (courir) __________ dans le parc chaque matin.", "correct": "couraient", "translation": "They used to run in the park every morning." },
+    { "question": "Nous (se promener) __________ au bord de la mer.", "correct": "nous promenions", "translation": "We used to walk along the seaside." },
+    { "question": "Elle (danser) __________ tout le temps.", "correct": "dansait", "translation": "She used to dance all the time." },
+    { "question": "Je (penser) __________ souvent à toi.", "correct": "pensais", "translation": "I used to often think about you." },
+    { "question": "Il (étudier) __________ tous les soirs pour ses examens.", "correct": "étudiait", "translation": "He used to study every night for his exams." },
+    { "question": "Vous (travailler) __________ à la bibliothèque l'après-midi.", "correct": "travailliez", "translation": "You used to work at the library in the afternoon." },
+    { "question": "Je (rêver) __________ de devenir un astronaute.", "correct": "rêvais", "translation": "I used to dream of becoming an astronaut." },
+    { "question": "Ils (répondre) __________ toujours à mes questions.", "correct": "répondaient", "translation": "They always used to answer my questions." },
+    { "question": "Nous (visiter) __________ des musées chaque mois.", "correct": "visions", "translation": "We used to visit museums every month." },
+    { "question": "Elle (avoir) __________ peur du noir.", "correct": "avait", "translation": "She used to be afraid of the dark." },
+    { "question": "Je (perdre) __________ souvent mes clés.", "correct": "perdais", "translation": "I used to often lose my keys." },
+    { "question": "Ils (vouloir) __________ toujours partir en voyage.", "correct": "voulaient", "translation": "They always wanted to go on trips." }
+
+];
+
+
+const section2Questions = 
+[
+    { "question": "Avant ils (voyager) __________ beaucoup.", "correct": "voyageaient", "translation": "Before, they used to travel a lot." },
+    { "question": "Est-ce que tu (connaître) __________ ce chanteur?", "correct": "connaissais", "translation": "Did you know this singer?" },
+    { "question": "Elle (prendre) __________ le bus tous les jours.", "correct": "prenait", "translation": "She used to take the bus every day." },
+    { "question": "Ils (lire) __________ tous les matins les journaux.", "correct": "lisaient", "translation": "They used to read the newspapers every morning." },
+    { "question": "En 2005 j’(avoir) __________ 15 ans.", "correct": "avais", "translation": "In 2005, I was 15 years old." },
+    { "question": "Nous (faire) __________ du vélo le weekend.", "correct": "faisions", "translation": "We used to ride bikes on the weekend." },
+    { "question": "Vous (aller) __________ souvent à la plage?", "correct": "alliez", "translation": "Did you often go to the beach?" },
+    { "question": "Tu (vouloir) __________ toujours devenir pilote.", "correct": "voulais", "translation": "You always wanted to become a pilot." },
+    { "question": "Ils (venir) __________ chez nous tous les étés.", "correct": "venaient", "translation": "They used to come to our house every summer." },
+    { "question": "Je (manger) __________ beaucoup de fruits.", "correct": "mangeais", "translation": "I used to eat a lot of fruit." },
+    { "question": "Elle (savoir) __________ jouer du violon.", "correct": "savait", "translation": "She knew how to play the violin." },
+    { "question": "Nous (attendre) __________ toujours longtemps.", "correct": "attendions", "translation": "We always used to wait a long time." },
+    { "question": "Ils (travailler) __________ dans un bureau à Paris.", "correct": "travaillaient", "translation": "They used to work in an office in Paris." },
+    { "question": "Quand j’étais enfant, je (lire) __________ beaucoup de livres.", "correct": "lisais", "translation": "When I was a child, I used to read a lot of books." },
+    { "question": "Tu (étudier) __________ l’espagnol à l’école.", "correct": "étudiais", "translation": "You used to study Spanish at school." },
+    { "question": "Nous (aimer) __________ jouer au football.", "correct": "aimions", "translation": "We used to like playing football." },
+    { "question": "Vous (prendre) __________ toujours du café le matin.", "correct": "preniez", "translation": "You always used to have coffee in the morning." },
+    { "question": "Ils (partir) __________ en vacances chaque été.", "correct": "partaient", "translation": "They used to go on vacation every summer." },
+    { "question": "Je (croire) __________ à ces histoires.", "correct": "croyais", "translation": "I used to believe in those stories." },
+    { "question": "Il (écrire) __________ des lettres tous les mois.", "correct": "écrivait", "translation": "He used to write letters every month." },
+    { "question": "Nous (rentrer) __________ tard après les fêtes.", "correct": "rentrions", "translation": "We used to come home late after parties." },
+    { "question": "Elle (vivre) __________ à New York à cette époque.", "correct": "vivait", "translation": "She used to live in New York at that time." },
+    { "question": "Tu (boire) __________ du lait tous les matins.", "correct": "buvais", "translation": "You used to drink milk every morning." },
+    { "question": "Ils (faire) __________ beaucoup de bruit.", "correct": "faisaient", "translation": "They used to make a lot of noise." },
+    { "question": "Je (croire) __________ que tout était possible.", "correct": "croyais", "translation": "I used to believe everything was possible." },
+    { "question": "Nous (recevoir) __________ des invités tous les dimanches.", "correct": "recevions", "translation": "We used to receive guests every Sunday." },
+    { "question": "Vous (penser) __________ souvent à vos amis.", "correct": "pensiez", "translation": "You used to often think about your friends." },
+    { "question": "Ils (courir) __________ chaque matin dans le parc.", "correct": "couraient", "translation": "They used to run every morning in the park." },
+    { "question": "Je (vouloir) __________ devenir écrivain.", "correct": "voulais", "translation": "I used to want to become a writer." },
+    { "question": "Elle (apprendre) __________ l’anglais avec un professeur.", "correct": "apprenait", "translation": "She used to learn English with a teacher." },
+    { "question": "Nous (voir) __________ nos grands-parents tous les étés.", "correct": "voyions", "translation": "We used to see our grandparents every summer." },
+    { "question": "Je (prendre) __________ le métro pour aller au travail.", "correct": "prenais", "translation": "I used to take the subway to go to work." },
+    { "question": "Il (falloir) __________ se lever tôt pour l’école.", "correct": "fallait", "translation": "We used to have to wake up early for school." },
+    { "question": "Vous (envoyer) __________ des cartes postales à vos amis.", "correct": "envoyiez", "translation": "You used to send postcards to your friends." },
+    { "question": "Ils (faire) __________ de la musique ensemble.", "correct": "faisaient", "translation": "They used to make music together." },
+    { "question": "Tu (aller) __________ souvent à la bibliothèque.", "correct": "allais", "translation": "You used to often go to the library." },
+    { "question": "Nous (nager) __________ dans la rivière quand nous étions enfants.", "correct": "nagions", "translation": "We used to swim in the river when we were children." },
+    { "question": "Je (vivre) __________ dans un petit village.", "correct": "vivais", "translation": "I used to live in a small village." },
+    { "question": "Elle (voir) __________ le docteur chaque semaine.", "correct": "voyait", "translation": "She used to see the doctor every week." },
+    { "question": "Ils (attendre) __________ le bus tous les matins.", "correct": "attendaient", "translation": "They used to wait for the bus every morning." }
+];
+
+const section3Questions = [
+    { "question": "Avant il (être) __________ vraiment petit.", "correct": "était", "translation": "Before, he was really small." },
+    { "question": "En Afrique nous (boire) __________ beaucoup d’eau.", "correct": "buvions", "translation": "In Africa, we used to drink a lot of water." },
+    { "question": "Pendant leur enfance, ils (aimer) __________ les bonbons.", "correct": "aimaient", "translation": "During their childhood, they used to like candies." },
+    { "question": "Est-ce que tu (faire) __________ du sport régulièrement?", "correct": "faisais", "translation": "Did you use to do sports regularly?" },
+    { "question": "Est-ce que vous (savoir) __________ parler français?", "correct": "saviez", "translation": "Did you use to know how to speak French?" },
+    { "question": "Quand j'étais jeune, je (vivre) __________ à la campagne.", "correct": "vivais", "translation": "When I was young, I used to live in the countryside." },
+    { "question": "Elle (voir) __________ souvent ses amis après l'école.", "correct": "voyait", "translation": "She used to see her friends often after school." },
+    { "question": "Nous (aller) __________ au marché tous les dimanches.", "correct": "allions", "translation": "We used to go to the market every Sunday." },
+    { "question": "Tu (prendre) __________ des cours de piano?", "correct": "prenais", "translation": "Did you use to take piano lessons?" },
+    { "question": "Il (lire) __________ des romans chaque soir.", "correct": "lisait", "translation": "He used to read novels every evening." },
+    { "question": "Ils (avoir) __________ un chien quand ils étaient enfants.", "correct": "avaient", "translation": "They used to have a dog when they were kids." },
+    { "question": "Je (vouloir) __________ devenir médecin.", "correct": "voulais", "translation": "I used to want to become a doctor." },
+    { "question": "Nous (manger) __________ souvent dans ce restaurant.", "correct": "mangions", "translation": "We used to eat often at this restaurant." },
+    { "question": "Tu (courir) __________ chaque matin pour t'entraîner.", "correct": "courais", "translation": "You used to run every morning to train." },
+    { "question": "Elle (parler) __________ plusieurs langues.", "correct": "parlait", "translation": "She used to speak several languages." },
+    { "question": "Ils (jouer) __________ au football après l'école.", "correct": "jouaient", "translation": "They used to play football after school." },
+    { "question": "Nous (apprendre) __________ le français avec notre professeur.", "correct": "apprenions", "translation": "We used to learn French with our teacher." },
+    { "question": "Je (travailler) __________ dans un café le week-end.", "correct": "travaillais", "translation": "I used to work in a café on the weekends." },
+    { "question": "Elle (dormir) __________ très tard le samedi.", "correct": "dormait", "translation": "She used to sleep very late on Saturdays." },
+    { "question": "Nous (écrire) __________ des lettres à nos amis à l'étranger.", "correct": "écrivions", "translation": "We used to write letters to our friends abroad." },
+    { "question": "Ils (comprendre) __________ bien le français.", "correct": "comprenaient", "translation": "They used to understand French well." },
+    { "question": "Je (étudier) __________ beaucoup pour les examens.", "correct": "étudiais", "translation": "I used to study a lot for the exams." },
+    { "question": "Elle (chanter) __________ dans la chorale de l'école.", "correct": "chantait", "translation": "She used to sing in the school choir." },
+    { "question": "Ils (regarder) __________ la télévision tous les soirs.", "correct": "regardaient", "translation": "They used to watch television every evening." },
+    { "question": "Nous (sortir) __________ souvent avec des amis.", "correct": "sortions", "translation": "We used to go out often with friends." },
+    { "question": "Vous (attendre) __________ le bus longtemps?", "correct": "attendiez", "translation": "Did you use to wait for the bus for a long time?" },
+    { "question": "Tu (dessiner) __________ quand tu étais enfant?", "correct": "dessinais", "translation": "Did you use to draw when you were a child?" },
+    { "question": "Il (pleuvoir) __________ souvent en automne.", "correct": "pleuvait", "translation": "It used to rain often in the fall." },
+    { "question": "Je (croire) __________ en la magie quand j'étais petit.", "correct": "croyais", "translation": "I used to believe in magic when I was little." },
+    { "question": "Nous (envoyer) __________ des cartes postales chaque été.", "correct": "envoyions", "translation": "We used to send postcards every summer." },
+    { "question": "Ils (recevoir) __________ beaucoup de cadeaux à Noël.", "correct": "recevaient", "translation": "They used to receive a lot of presents at Christmas." },
+    { "question": "Elle (mettre) __________ toujours la même robe pour les fêtes.", "correct": "mettait", "translation": "She used to always wear the same dress for parties." },
+    { "question": "Vous (jouer) __________ souvent au tennis le week-end?", "correct": "jouiez", "translation": "Did you use to play tennis often on weekends?" },
+    { "question": "Ils (dormir) __________ tôt pendant la semaine.", "correct": "dormaient", "translation": "They used to sleep early during the week." },
+    { "question": "Nous (répéter) __________ la chanson avant chaque spectacle.", "correct": "répétions", "translation": "We used to rehearse the song before each show." },
+    { "question": "Je (rêver) __________ de voyager autour du monde.", "correct": "rêvais", "translation": "I used to dream of traveling around the world." },
+    { "question": "Elle (porter) __________ toujours des vêtements colorés.", "correct": "portait", "translation": "She used to always wear colorful clothes." },
+    { "question": "Ils (attendre) __________ toujours la fin du mois pour faire des courses.", "correct": "attendaient", "translation": "They used to always wait until the end of the month to go shopping." },
+    { "question": "Nous (rendre) __________ visite à nos parents chaque été.", "correct": "rendions", "translation": "We used to visit our parents every summer." },
+    { "question": "Vous (parler) __________ souvent de vos projets d'avenir.", "correct": "parliez", "translation": "You used to often talk about your future plans." },
+    { "question": "Je (penser) __________ que tout était possible.", "correct": "pensais", "translation": "I used to think that everything was possible." }
+];
+
+
+        // Function to shuffle and select 5 random questions
+        function getRandomQuestions(arr) {
+            return arr.sort(() => 0.5 - Math.random()).slice(0, 5);
+        }
+function displayQuestions() {
+    const quizForm = document.getElementById('quizForm');
+    const quizForm1 = document.getElementById('quizForm1');
+    const quizForm2 = document.getElementById('quizForm2');
+
+
+    quizForm.innerHTML = ''; // Clear the form
+
+    // Get 5 random questions from each section
+    const section1Selected = getRandomQuestions(section1Questions);
+    const section2Selected = getRandomQuestions(section2Questions);
+    const section3Selected = getRandomQuestions(section3Questions);
+
+
+    // Display Section 1 questions
+    section1Selected.forEach((q, index) => {
+        const questionHTML = `
+            <div class="question">
+                <p>${index + 1}.${q.question}
+                   <button type="button" class="tooltip" id="tooltip-${index + 1}" title="${q.translation}">🔍</button>
+                 <span id="translation-${index + 1}" class="translation"></span>
+                </p>
+                <input type="text" id="q${index + 1}" onblur="validateAnswer(${index + 1}, '${q.correct}')">
+                <span id="correct-answer-${index + 1}" class="correct-answer">Correct answer: ${q.correct}</span>
+            </div>
+        `;
+        quizForm.innerHTML += questionHTML;
+    });
+
+    // Display Section 2 questions
+    section2Selected.forEach((q, index) => {
+        const questionHTML = `
+            <div class="question">
+                <p>${index + 6}. ${q.question}
+                    <button type="button" class="tooltip" id="tooltip-${index + 6}" title="${q.translation}">🔍</button>
+                    <span id="translation-${index + 6}" class="translation"></span>
+
+                </p>
+                <input type="text" id="q${index + 6}" onblur="validateAnswer(${index + 6}, '${q.correct}')">
+                <span id="correct-answer-${index + 6}" class="correct-answer">Correct answer: ${q.correct}</span>
+            </div>
+        `;
+        quizForm1.innerHTML += questionHTML;
+    });
+    
+    // Display Section 3 questions
+    section3Selected.forEach((q, index) => {
+        const questionHTML = `
+            <div class="question">
+                <p>${index + 11}. ${q.question}
+                   <button type="button" class="tooltip" id="tooltip-${index + 11}" title="${q.translation}">🔍</button>
+                   <span id="translation-${index + 11}" class="translation"></span>
+
+                </p>
+                <input type="text" id="q${index + 11}" onblur="validateAnswer(${index + 11}, '${q.correct}')">
+                <span id="correct-answer-${index + 11}" class="correct-answer">Correct answer: ${q.correct}</span>
+            </div>
+        `;
+        quizForm2.innerHTML += questionHTML;
+    });            
+            
+            
+
+    // Add the "Check Answers" button
+    quizForm2.innerHTML += `
+        <button type="button" onclick="checkAnswers()">Check exercise</button>
+    `;
+
+    // Add event listeners to the tooltips
+    const tooltips = document.querySelectorAll('.tooltip');
+    tooltips.forEach(tooltip => {
+        tooltip.addEventListener('click', () => {
+            const questionIndex = tooltip.id.replace('tooltip-', '');
+            const translation = document.getElementById(`translation-${questionIndex}`);
+            translation.innerText = tooltip.title;
+        });
+    });
+}
+// Function to check all answers (on button click)
+function checkAnswers() {
+    const resultDiv = document.getElementById('result');
+    const inputs = document.querySelectorAll('input[type="text"]');
+    let correctCount = 0;
+
+    inputs.forEach(input => {
+        const questionIndex = input.id.replace('q', '');
+        const correctAnswer = document.getElementById(`correct-answer-${questionIndex}`).innerText.replace('Correct answer: ', '');
+
+        if (input.value.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+            correctCount++;
+        } else {
+            document.getElementById(`correct-answer-${questionIndex}`).style.display = 'block'; // Show correct answer if wrong
+        }
+
+        // Make the tooltip visible after the check
+        document.getElementById(`tooltip-${questionIndex}`).style.display = 'inline';
+    });
+
+    resultDiv.innerHTML = `You got ${correctCount} out of ${inputs.length} correct!`;
+
+    return false;
+}
+         
+
+        // Load questions when the page loads
+        window.onload = displayQuestions;
+    </script>
+
+</body>
+</html>
