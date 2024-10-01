@@ -5,52 +5,165 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <title>SIM ACADEMY</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Poppins', sans-serif;
+            background-color: #fefefe;
             margin: 0;
             padding: 0;
+            color: #333;
         }
         header {
-            background-color: #4CAF50;
+            background-color: #43A047; /* Vibrant green */
             color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        nav {
+            padding: 40px;
+            text-align: left; /* Modern left alignment */
             display: flex;
-            flex-direction: column; /* Stack links vertically */
+            justify-content: space-between;
             align-items: center;
-            background-color: #333;
         }
-        nav a {
+        header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.8em;
+            margin: 0;
+            color: white; /* No gradient for title, solid color */
+            font-weight: 700;
+            letter-spacing: 0.05em; /* Light letter-spacing for modernity */
+        }
+        header nav {
+            margin-right: 20px;
+        }
+        header nav a {
             color: white;
-            padding: 14px 20px;
+            font-weight: 500;
+            margin-left: 20px;
             text-decoration: none;
-            text-align: center;
-            font-size: 18px;
-            width: 100%; /* Make links take full width */
+            font-size: 1.1em;
+            transition: color 0.3s;
+            cursor: pointer;
         }
-        nav a:hover {
-            background-color: #575757;
+        header nav a:hover {
+            color: #f4d6a0;
         }
+
         .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 40px;
             background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
         .container h1 {
             font-size: 2.5em;
-            margin: 0;
-            padding: 0;
+            margin-bottom: 40px;
+            color: #2F4F4F;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .container nav {
-            margin-top: 20px;
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .button-grid a {
+            display: block;
+            padding: 30px;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            border-radius: 15px;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+        }
+        .button-grid a:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Decorative Icon */
+        .button-grid a:before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+        .button-grid a:after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .button-grid a:hover:after {
+            top: -30px;
+            right: -30px;
+        }
+
+        /* Bright Gradient styles for each button */
+        .conjugation-test {
+            background: linear-gradient(145deg, #76c7b7, #58a48c); /* Vibrant turquoise */
+        }
+        .passe-test {
+            background: linear-gradient(145deg, #FBC490, #F19B5A); /* Orange-beige */
+        }
+        .recent-test {
+            background: linear-gradient(145deg, #E6BEAE, #E09A8A); /* Warm coral tones */
+        }
+        .futurproche-test {
+            background: linear-gradient(145deg, #A2DA98, #7FC872); /* Light fresh green */
+        }
+        .futur-simple-test {
+            background: linear-gradient(145deg, #8DC1DA, #66A4BF); /* Cool sky blue */
+        }
+        .imparfait-test {
+            background: linear-gradient(145deg, #F2D1C9, #F0A6A6); /* Soft pink-beige */
+        }
+        .imperatif-test {
+            background: linear-gradient(145deg, #B6C99D, #9BB27D); /* Earthy green */
+        }
+
+        /* New Quiz Section */
+        .quiz-section a {
+            background: linear-gradient(145deg, #8bc34a, #689f38); /* Bright green for quizzes */
+            color: white;
+        }
+
+        /* Hideable sections */
+        .button-grid {
+            display: none;
+        }
+
+        /* Secondary links for Notes section */
+        .secondary-links a {
+            background: linear-gradient(145deg, #F4D6A0, #EBC691); /* Beige tones with yellow touch */
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* Show buttons when section is selected */
+        .active {
+            display: grid !important;
         }
     </style>
 </head>
@@ -58,25 +171,71 @@
 
     <header>
         <h1>SIM ACADEMY</h1>
+        <nav>
+            <a id="test-btn">Test</a>
+            <a id="notes-btn">Notes</a>
+            <a id="quizzes-btn">Quizzes</a>
+        </nav>
     </header>
     
     <div class="container">
-        <nav>
-            <a href="quiz.html">Conjugation Test</a>
-            <a href="passe.html">Passé Composé Test</a>
-            <a href="recent.html">Passé Récent Test</a>
-            <a href="futurprochetest.html">Futur Proche Test</a>
-            <a href="simple.html">Futur Simple Test</a>
-            <a href="imparfait.html">L’imparfait Test</a>
-            <a href="imperatif.html">L’impératif Test</a>
-
-
-            <br><br>
+        <h1>French Language Quizzes</h1>
+        
+        <!-- Test links section -->
+        <div id="test-section" class="button-grid">
+            <a href="quiz.html" class="conjugation-test">Conjugation Test</a>
+            <a href="passe.html" class="passe-test">Passé Composé Test</a>
+            <a href="recent.html" class="recent-test">Passé Récent Test</a>
+            <a href="futurprochetest.html" class="futurproche-test">Futur Proche Test</a>
+            <a href="simple.html" class="futur-simple-test">Futur Simple Test</a>
+            <a href="imparfait.html" class="imparfait-test">L’imparfait Test</a>
+            <a href="imperatif.html" class="imperatif-test">L’impératif Test</a>
+        </div>
+        
+        <!-- Notes section -->
+        <div id="notes-section" class="button-grid secondary-links">
             <a href="conjugation.html">Conjugation</a>
             <a href="tenses.html">Tenses</a>
-            <a href="pastparticiple.html">Past Participle</a>            
-        </nav>
+            <a href="pastparticiple.html">Past Participle</a>
+        </div>
+        
+        <!-- New Quiz Section -->
+        <div id="quiz-section" class="button-grid quiz-section">
+            <a href="quiz1.html">Quiz 1</a>
+        </div>
     </div>
+
+    <script>
+        // Elements
+        const testSection = document.getElementById('test-section');
+        const notesSection = document.getElementById('notes-section');
+        const quizSection = document.getElementById('quiz-section');
+        const testBtn = document.getElementById('test-btn');
+        const notesBtn = document.getElementById('notes-btn');
+        const quizzesBtn = document.getElementById('quizzes-btn');
+
+        // Default to showing Test section
+        testSection.classList.add('active');
+
+        // Event Listeners
+        testBtn.addEventListener('click', () => {
+            testSection.classList.add('active');
+            notesSection.classList.remove('active');
+            quizSection.classList.remove('active');
+        });
+
+        notesBtn.addEventListener('click', () => {
+            notesSection.classList.add('active');
+            testSection.classList.remove('active');
+            quizSection.classList.remove('active');
+        });
+
+        quizzesBtn.addEventListener('click', () => {
+            quizSection.classList.add('active');
+            testSection.classList.remove('active');
+            notesSection.classList.remove('active');
+        });
+    </script>
 
 </body>
 </html>
