@@ -22,6 +22,19 @@
             color: white;
             padding: 20px; /* Reduced padding */
             text-align: center; /* Centered title and nav */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header .logo-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        header .logo-title img {
+            width: 50px; /* Adjust size as needed */
+            height: auto;
+            margin-right: 15px; /* Space between logo and title */
         }
         header h1 {
             font-family: 'Poppins', sans-serif;
@@ -167,19 +180,21 @@
 <body>
 
     <header>
-        <h1>SIM ACADEMY</h1>
+        <div class="logo-title">
+            <img src="logo.png" alt="SIM Academy Logo"> <!-- Add your logo source here -->
+            <h1>SIM ACADEMY</h1>
+        </div>
         <nav>
-            <a id="test-btn">Tests</a>
+            <a id="test-btn">Test</a>
             <a id="notes-btn">Notes</a>
             <a id="quizzes-btn">Quizzes</a>
         </nav>
     </header>
     
     <div class="container">
+        <h1>French Language Quizzes</h1>
         
         <!-- Test links section -->
-        <h1>French Grammar Tests</h1>
-
         <div id="test-section" class="button-grid">
             <a href="quiz.html" class="conjugation-test">Conjugation Test</a>
             <a href="passe.html" class="passe-test">Passé Composé Test</a>
@@ -191,8 +206,6 @@
         </div>
         
         <!-- Notes section -->
-                <h1>French Grammar Notes</h1>
-
         <div id="notes-section" class="button-grid secondary-links">
             <a href="conjugation.html">Conjugation</a>
             <a href="tenses.html">Tenses</a>
@@ -200,8 +213,6 @@
         </div>
         
         <!-- New Quiz Section -->
-                <h1>French Grammar Quiz</h1>
-
         <div id="quiz-section" class="button-grid quiz-section">
             <a href="quiz1.html">Quiz 1</a>
         </div>
