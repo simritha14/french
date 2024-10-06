@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>French Tenses - Rules and Usage</title>
     <style>
+    
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -42,6 +43,13 @@
         }
         .index-container a:hover {
             text-decoration: underline;
+        }
+        
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+            text-align: center;
         }
         .section {
             margin-bottom: 40px;
@@ -110,37 +118,52 @@
     <div id="passeCompose" class="section">
         <div class="caption">Passé Composé</div>
         <div class="content">
-            The Passé Composé is used to express actions that have been completed in the past. It is formed using the auxiliary verbs 'avoir' or 'être' followed by the past participle of the main verb.
-            <center><h3><p id="box">auxiliary verb conjugated + past participle of infinitive verb</p></h3></center>
-         Most verbs use 'avoir' as the auxiliary verb.
-            <h4>Conjugation of Avoir (to have)</h4>
-            <table>
-                <tr><th>Pronoun</th><th>Conjugation</th></tr>
-                <tr><td>Je</td><td>ai</td></tr>
-                <tr><td>Tu</td><td>as</td></tr>
-                <tr><td>Il/Elle/On</td><td>a</td></tr>
-                <tr><td>Nous</td><td>avons</td></tr>
-                <tr><td>Vous</td><td>avez</td></tr>
-                <tr><td>Ils/Elles</td><td>ont</td></tr>
-            </table>
+            <center><h3><p id="box">avoir / être + past participle of infinitive verb</p></h3></center>
+
+    <table>
+        <tr>
+            <th>Pronoun</th>
+            <th>Avoir (to have)</th>
+            <th>Être (to be)</th>
+        </tr>
+        <tr>
+            <td>Je</td>
+            <td>ai</td>
+            <td>suis</td>
+        </tr>
+        <tr>
+            <td>Tu</td>
+            <td>as</td>
+            <td>es</td>
+        </tr>
+        <tr>
+            <td>Il/Elle</td>
+            <td>a</td>
+            <td>est</td>
+        </tr>
+        <tr>
+            <td>Nous</td>
+            <td>avons</td>
+            <td>sommes</td>
+        </tr>
+        <tr>
+            <td>Vous</td>
+            <td>avez</td>
+            <td>êtes</td>
+        </tr>
+        <tr>
+            <td>Ils/Elles</td>
+            <td>ont</td>
+            <td>sont</td>
+        </tr>
+    </table>
+
+
             <ul>
-                <li>Verb of movement (aller, venir, etc.), use 'être' as the auxiliary verb.</li>
                 <li>Reflexive Verbs (se lever, se regarder, etc) use 'être' as the auxiliary verb.</li>
-                <li>The past participle must agree with the subject when 'être' is used as the auxiliary verb.</li>
-                <li>Example: J'ai mangé. (I ate.) / Elle est allée. (She went.)</li>
             </ul>
 
-            <h4>Conjugation of Être (to be)</h4>
-            <table>
-                <tr><th>Pronoun</th><th>Conjugation</th></tr>
-                <tr><td>Je</td><td>suis</td></tr>
-                <tr><td>Tu</td><td>es</td></tr>
-                <tr><td>Il/Elle/On</td><td>est</td></tr>
-                <tr><td>Nous</td><td>sommes</td></tr>
-                <tr><td>Vous</td><td>êtes</td></tr>
-                <tr><td>Ils/Elles</td><td>sont</td></tr>
-            </table>
-            <h4>DR MRS VANDER TRAMPs</h4>
+            <h4>DR MRS VANDER TRAMPP (ÊTRE) </h4>
 
             <ul>
                 <li>Devenir (to become)</li>
@@ -169,15 +192,9 @@
     <div id="futurProche" class="section">
         <div class="caption">Futur Proche</div>
         <div class="content">
-            The Futur Proche is used to express actions that are going to happen soon. 
             <center><h3><p id="box">aller (present tense) + infinitive verb</p></h3></center>
 
-            <ul>
-                <li>The verb 'aller' must be conjugated in the present tense.</li>
-                <li>The main verb remains in its infinitive form.</li>
-                <li>Example: Je vais partir. (I am going to leave.) / Nous allons manger. (We are going to eat.)</li>
-            </ul>
-
+            
             <h4>Conjugation of Aller (to go)</h4>
             <table>
                 <tr><th>Pronoun</th><th>Conjugation</th></tr>
@@ -194,9 +211,10 @@
     <div id="futurSimple" class="section">
         <div class="caption">Futur Simple</div>
         <div class="content">
-            The Futur Simple is used to describe actions that will happen in the future. 
-            <center><h3><p id="box">ainfinitive verb + (ai,as,a,ons,ez,ont)</p></h3></center>
-
+            <center><h3><p id="box">verb + (ai,as,a,ons,ez,ont)</p></h3></center>
+            <ul>
+                <li>Remove e for re verbs.</li>
+            </ul>
 <h4>Conjugation of Futur Simple</h4>
             <table>
                 <tr><th>Pronoun</th><th>Conjugation</th></tr>
@@ -208,52 +226,58 @@
                 <tr><td>Ils/Elles</td><td>ont</td></tr>
             </table>
             <ul>
-  <li>Verbs with a grave accent on the stem's short "e":
+  <li>Exception
     <ul>
-      <li>peser – je pèserai</li>
-      <li>modeler – je modèlerai</li>
-    </ul>
-  </li>
-  
-  <li>Many verbs ending in <code>-eler</code> or <code>-eter</code> double the final consonants:
-    <ul>
-      <li>jeter – je jetterai</li>
-    </ul>
-  </li>
-  
-  <li>Verbs that lose the <em>i</em> in the ending <code>-rir</code> before adding the future ending:
-    <ul>
-      <li>courir – je courrai</li>
-      <li>mourir – je mourrai</li>
-    </ul>
-  </li>
-  
-  <li>Verbs ending in <code>-yer</code> change the <em>y</em> to an <em>i</em> in the future tense (with an exception for <code>-ayer</code> where both are allowed):
-    <ul>
-      <li>employer – j’emploierai, tu emploieras, il emploiera, nous emploierons, vous emploierez, ils emploieront</li>
-      <li>payer – je payerai/paierai</li>
-    </ul>
-  </li>
-  
-  <li>Irregular verbs ending in <code>-oir</code>, as well as <code>aller</code>, <code>envoyer</code>, <code>faire</code>, and <code>venir</code>, follow irregular patterns:
-    <ul>
-      <li>pouvoir – je pourrai, tu pourras, il pourra, nous pourrons, vous pourrez, ils pourront</li>
+      <li>peser – pèser</li>
+      <li>modeler – modèler</li>
+     <li>jeter – jetter</li>
+    <li>courir – courr</li>
+    <li>mourir – mourr</li>
+    <li>employer – emploier</li>
+    <li>payer – paier</li>
+    <li>pouvoir – pourr</li>
+    <li>aller – ir</li>
+    <li>envoyer – enverr</li>
+    <li>faire – fer</li>
+    <li>venir – viendr</li>
+    <li>avoir – aur</li>
+    <li>être – ser</li>
+    <li>acheter – achèter</li>
+    <li>acquérir – acquerr</li>
+    <li>appeler – appeller</li>
+    <li>asseoir – assiér or assoir</li>
+    <li>broyer – broier</li>
+    <li>clore – clor</li>
+    <li>conduire – conduir</li>
+    <li>connaître – connaîtr</li>
+    <li>croître – croîtr</li>
+    <li>naître – naîtr</li>
+    <li>paître – paîtr</li>
+    <li>coudre – coudr</li>
+    <li>cueillir – cueiller</li>
+    <li>falloir – faudr</li>
+    <li>lever – lèver</li>
+    <li>modeler – modèler</li>
+    <li>pleuvoir – pleuvr</li>
+    <li>savoir – saur</li>
+    <li>tenir – tiendr</li>
+    <li>valoir – vaudr</li>
+    <li>voir – verr</li>
+    <li>vouloir – voudr</li>
+</ul>
 
+     
 
-            <ul>
-                <li>Example: Je parlerai. (I will speak.) / Nous finirons. (We will finish.)</li>
-            </ul>
-    </div>
+  </li>
+  
 
     <div id="passeRecent" class="section">
         <div class="caption">Passé Récent</div>
         <div class="content">
-            The Passé Récent is used to express actions that have just happened. It is formed using the present tense of 'venir' followed by 'de' and the infinitive of the main verb.
             <center><h3><p id="box">venir (present tense) + de + infinitive verb</p></h3></center>
 
             <ul>
 
-                <li>Example: Je viens de manger. (I just ate.) / Il vient de partir. (He just left.)</li>
             </ul>
 
             <h4>Conjugation of Venir (to come)</h4>
