@@ -137,22 +137,15 @@ const section2Questions = [
 ];
 
 const section3Questions = [
-    { question: '11. Marie (venir) _____ sortir de la maison quand il a commencé à pleuvoir.', correct: 'vient de' },
-    { question: '12. Nous (venir) _____ finir le projet avant que le patron n’arrive.', correct: 'venons de' },
-    { question: '13. Ils (venir) _____ se disputer juste avant que je ne les appelle.', correct: 'viennent de' },
-    { question: '14. Vous (venir) _____ acheter ce livre avant qu’il ne soit épuisé.', correct: 'venez d’' },
+    { question: '11. Marie _____ sortir de la maison quand il a commencé à pleuvoir.', correct: 'vient de' },
+    { question: '12. Nous _____ finir le projet avant que le patron n’arrive.', correct: 'venons de' },
+    { question: '13. Ils  _____ se disputer juste avant que je ne les appelle.', correct: 'viennent de' },
+    { question: '14. Vous  _____ manger ce livre avant qu’il ne soit épuisé.', correct: 'venez de' },
     { question: '15. Je (venir) _____ recevoir un appel important avant de te voir.', correct: 'viens de' }
 ];
 
-const section4Questions = [
-    { question: '11. Nous (aller) _____ au cinéma ce soir.', correct: 'allons aller' },
-    { question: '12. Je (travailler) _____ sur ce projet demain.', correct: 'vais travailler' },
-    { question: '13. Elles (prendre) _____ le train pour Paris bientôt.', correct: 'vont prendre' },
-    { question: '14. Tu (faire) _____ tes devoirs après le dîner.', correct: 'vas faire' },
-    { question: '15. Il (venir) _____ à la réunion demain matin.', correct: 'va venir' }
-];
 
-const section5Questions = [
+const section4Questions = [
     { question: '16. Nous (partir) _____ en voyage cet été.', correct: 'partirons' },
     { question: '17. Elle (réussir) _____ à son examen la semaine prochaine.', correct: 'réussira' },
     { question: '18. Ils (venir) _____ te voir demain.', correct: 'viendront' },
@@ -160,7 +153,7 @@ const section5Questions = [
     { question: '20. Tu (recevoir) _____ une réponse bientôt.', correct: 'recevras' }
 ];
 
-const section6Questions = [
+const section5Questions = [
     { question: '21. Quand j\'étais petit, je (jouer) _____ au football tous les jours.', correct: 'jouais' },
     { question: '22. Ils (avoir) _____ toujours des bonbons après l’école.', correct: 'avaient' },
     { question: '23. Nous (lire) _____ des histoires avant de dormir.', correct: 'lisions' },
@@ -168,7 +161,7 @@ const section6Questions = [
     { question: '25. Tu (aller) _____ à la plage chaque été.', correct: 'allais' }
 ];
 
-const section7Questions = [
+const section6Questions = [
    { question: "26. (dire/la vérité) __________ (tu)", correct: "Dis la vérité" },
    { question: "27. (prendre/ton manteau) __________ (vous)", correct: "Prenez votre manteau" },
    { question: "28. (finir/vos devoirs) __________ (nous)", correct: "Finissons nos devoirs" },
@@ -176,14 +169,22 @@ const section7Questions = [
    { question: "30. (être/patient) __________ (vous)", correct: "Soyez patients" }
 ];
 
-const quizSections = [
+const section7Questions = [
+    { question: '31. Nous (aller) _____ au cinéma ce soir.', correct: 'allons aller' },
+    { question: '32. Je (travailler) _____ sur ce projet demain.', correct: 'vais travailler' },
+    { question: '33. Elles (prendre) _____ le train pour Paris bientôt.', correct: 'vont prendre' },
+    { question: '34. Tu (faire) _____ tes devoirs après le dîner.', correct: 'vas faire' },
+    { question: '35. Il (venir) _____ à la réunion demain matin.', correct: 'va venir' }
+];
+        const quizSections = [
             { title: "Complete the sentences with the correct verb in Present Tense.", questions: section1Questions },
             { title: "Complete the sentences with the correct form of the Passé Composé. Don’t forget about exceptions such as irregular verbs and participle agreements", questions: section2Questions },
             { title: "Complete the sentences with Passé Récent Tense.", questions: section3Questions },
-            { title: "Complete the sentences with the Futur Proche form of the verbs in brackets:", questions: section4Questions },
-            { title: "Complete the sentences with the Futur Simple form of the verbs in brackets.", questions: section5Questions },
-            { title: "Complete the sentences with the correct imparfait form of the verbs in brackets. ", questions: section6Questions },
-            { title: "Complete the gaps with L’impératif", questions: section7Questions },
+            { title: "Complete the sentences with the Futur Simple form of the verbs in brackets.", questions: section4Questions },
+            { title: "Complete the sentences with the correct imparfait form of the verbs in brackets. ", questions: section5Questions },
+            { title: "Complete the gaps with L’impératif", questions: section6Questions },
+            { title: "Complete the sentences with the Futur Proche form of the verbs in brackets:", questions: section7Questions },
+
         ];
 
         // Function to display questions dynamically
@@ -225,16 +226,21 @@ const quizSections = [
             document.getElementById('result-popup').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
         }
-
+    document.querySelectorAll('input').forEach(input => {
+        input.value = '';
+    });
         // Function to close the result popup
         function closePopup() {
             document.getElementById('result-popup').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
+                        document.querySelectorAll('input').forEach(input => {
+        input.value = '';
+    });
         }
 
         // Call displayQuestions after the DOM is fully loaded
         window.onload = displayQuestions;
-        
+
         
     </script>
     
